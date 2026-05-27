@@ -4,7 +4,7 @@ package mp4
 
 // https://opus-codec.org/docs/opus_in_isobmff.html
 
-func BoxTypeOpus() BoxType { return StrToBoxType("Opus") }
+func BoxTypeOpus() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 func init() {
 	AddAnyTypeBoxDef(&AudioSampleEntry{}, BoxTypeOpus())
@@ -14,7 +14,7 @@ func init() {
 
 // https://opus-codec.org/docs/opus_in_isobmff.html
 
-func BoxTypeDOps() BoxType { return StrToBoxType("dOps") }
+func BoxTypeDOps() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 func init() {
 	AddBoxDef(&DOps{})
@@ -33,22 +33,11 @@ type DOps struct {
 	ChannelMapping       []uint8 `mp4:"8,opt=dynamic,size=8,len=dynamic"`
 }
 
-func (DOps) GetType() BoxType {
-	return BoxTypeDOps()
-}
+func (DOps) GetType() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 func (dops DOps) IsOptFieldEnabled(name string, ctx Context) bool {
-	switch name {
-	case "StreamCount", "CoupledCount", "ChannelMapping":
-		return dops.ChannelMappingFamily != 0
-	}
+	_ = "STUB: not implemented"
 	return false
 }
 
-func (ops DOps) GetFieldLength(name string, ctx Context) uint {
-	switch name {
-	case "ChannelMapping":
-		return uint(ops.OutputChannelCount)
-	}
-	return 0
-}
+func (ops DOps) GetFieldLength(name string, ctx Context) uint { _ = "STUB: not implemented"; return 0 }

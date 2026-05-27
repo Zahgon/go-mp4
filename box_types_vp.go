@@ -4,7 +4,7 @@ package mp4
 
 /*************************** vp08 ****************************/
 
-func BoxTypeVp08() BoxType { return StrToBoxType("vp08") }
+func BoxTypeVp08() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 func init() {
 	AddAnyTypeBoxDef(&VisualSampleEntry{}, BoxTypeVp08())
@@ -12,7 +12,7 @@ func init() {
 
 /*************************** vp09 ****************************/
 
-func BoxTypeVp09() BoxType { return StrToBoxType("vp09") }
+func BoxTypeVp09() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 func init() {
 	AddAnyTypeBoxDef(&VisualSampleEntry{}, BoxTypeVp09())
@@ -20,7 +20,7 @@ func init() {
 
 /*************************** VpcC ****************************/
 
-func BoxTypeVpcC() BoxType { return StrToBoxType("vpcC") }
+func BoxTypeVpcC() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 func init() {
 	AddBoxDef(&VpcC{})
@@ -40,14 +40,6 @@ type VpcC struct {
 	CodecInitializationData     []uint8 `mp4:"10,size=8,len=dynamic"`
 }
 
-func (VpcC) GetType() BoxType {
-	return BoxTypeVpcC()
-}
+func (VpcC) GetType() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
-func (vpcc VpcC) GetFieldLength(name string, ctx Context) uint {
-	switch name {
-	case "CodecInitializationData":
-		return uint(vpcc.CodecInitializationDataSize)
-	}
-	return 0
-}
+func (vpcc VpcC) GetFieldLength(name string, ctx Context) uint { _ = "STUB: not implemented"; return 0 }

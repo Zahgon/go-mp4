@@ -1,11 +1,7 @@
 package mp4
 
 import (
-	"bytes"
-	"encoding/binary"
-	"fmt"
 	"io"
-	"math"
 )
 
 type Context struct {
@@ -52,9 +48,7 @@ type BoxInfo struct {
 	Context
 }
 
-func (bi *BoxInfo) IsSupportedType() bool {
-	return bi.Type.IsSupported(bi.Context)
-}
+func (bi *BoxInfo) IsSupportedType() bool { _ = "STUB: not implemented"; return false }
 
 const (
 	SmallHeaderSize = 8
@@ -65,106 +59,34 @@ const (
 // If bi.ExtendToEOF is true, the size field is set to zero (indicating the box extends to EOF).
 // If the size fits in a uint32 and HeaderSize is not LargeHeaderSize, an 8-byte small header is used.
 // Otherwise, a 16-byte large header is used with size field set to 1 and the actual size in the extended field.
-func EncodeBoxInfo(bi *BoxInfo) []byte {
-	var data []byte
-	if bi.ExtendToEOF {
-		data = make([]byte, SmallHeaderSize)
-	} else if bi.Size <= math.MaxUint32 && bi.HeaderSize != LargeHeaderSize {
-		data = make([]byte, SmallHeaderSize)
-		binary.BigEndian.PutUint32(data, uint32(bi.Size))
-	} else {
-		data = make([]byte, LargeHeaderSize)
-		binary.BigEndian.PutUint32(data, 1)
-		binary.BigEndian.PutUint64(data[SmallHeaderSize:], bi.Size)
-	}
-	data[4] = bi.Type[0]
-	data[5] = bi.Type[1]
-	data[6] = bi.Type[2]
-	data[7] = bi.Type[3]
-	return data
-}
+func EncodeBoxInfo(bi *BoxInfo) []byte { _ = "STUB: not implemented"; return nil }
 
 // WriteBoxInfo writes common fields which are defined as "Box" class member at ISO/IEC 14496-12.
 // This function ignores bi.Offset and returns BoxInfo which contains real Offset and recalculated Size/HeaderSize.
 func WriteBoxInfo(w io.WriteSeeker, bi *BoxInfo) (*BoxInfo, error) {
-	offset, err := w.Seek(0, io.SeekCurrent)
-	if err != nil {
-		return nil, err
-	}
-
-	data := EncodeBoxInfo(bi)
-	if _, err := w.Write(data); err != nil {
-		return nil, err
-	}
-
-	return &BoxInfo{
-		Offset:      uint64(offset),
-		Size:        bi.Size - bi.HeaderSize + uint64(len(data)),
-		HeaderSize:  uint64(len(data)),
-		Type:        bi.Type,
-		ExtendToEOF: bi.ExtendToEOF,
-	}, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // ReadBoxInfo reads common fields which are defined as "Box" class member at ISO/IEC 14496-12.
-func ReadBoxInfo(r io.ReadSeeker) (*BoxInfo, error) {
-	offset, err := r.Seek(0, io.SeekCurrent)
-	if err != nil {
-		return nil, err
-	}
+func ReadBoxInfo(r io.ReadSeeker) (*BoxInfo, error) { _ = "STUB: not implemented"; return nil, nil }
 
-	bi := &BoxInfo{
-		Offset: uint64(offset),
-	}
+// read 8 bytes
 
-	// read 8 bytes
-	buf := bytes.NewBuffer(make([]byte, 0, SmallHeaderSize))
-	if _, err := io.CopyN(buf, r, SmallHeaderSize); err != nil {
-		return nil, err
-	}
-	bi.HeaderSize += SmallHeaderSize
+// pick size and type
 
-	// pick size and type
-	data := buf.Bytes()
-	bi.Size = uint64(binary.BigEndian.Uint32(data))
-	bi.Type = BoxType{data[4], data[5], data[6], data[7]}
+// box extends to end of file
 
-	if bi.Size == 0 {
-		// box extends to end of file
-		offsetEOF, err := r.Seek(0, io.SeekEnd)
-		if err != nil {
-			return nil, err
-		}
-		bi.Size = uint64(offsetEOF) - bi.Offset
-		bi.ExtendToEOF = true
-		if _, err := bi.SeekToPayload(r); err != nil {
-			return nil, err
-		}
-	} else if bi.Size == 1 {
-		// read more 8 bytes
-		buf.Reset()
-		if _, err := io.CopyN(buf, r, LargeHeaderSize-SmallHeaderSize); err != nil {
-			return nil, err
-		}
-		bi.HeaderSize += LargeHeaderSize - SmallHeaderSize
-		bi.Size = binary.BigEndian.Uint64(buf.Bytes())
-	}
-
-	if bi.Size == 0 {
-		return nil, fmt.Errorf("invalid size")
-	}
-
-	return bi, nil
-}
+// read more 8 bytes
 
 func (bi *BoxInfo) SeekToStart(s io.Seeker) (int64, error) {
-	return s.Seek(int64(bi.Offset), io.SeekStart)
+	_ = "STUB: not implemented"
+	return 0, nil
 }
 
 func (bi *BoxInfo) SeekToPayload(s io.Seeker) (int64, error) {
-	return s.Seek(int64(bi.Offset+bi.HeaderSize), io.SeekStart)
+	_ = "STUB: not implemented"
+	return 0, nil
 }
 
-func (bi *BoxInfo) SeekToEnd(s io.Seeker) (int64, error) {
-	return s.Seek(int64(bi.Offset+bi.Size), io.SeekStart)
-}
+func (bi *BoxInfo) SeekToEnd(s io.Seeker) (int64, error) { _ = "STUB: not implemented"; return 0, nil }

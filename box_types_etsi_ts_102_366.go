@@ -4,7 +4,7 @@ package mp4
 
 // https://www.etsi.org/deliver/etsi_ts/102300_102399/102366/01.04.01_60/ts_102366v010401p.pdf
 
-func BoxTypeAC3() BoxType { return StrToBoxType("ac-3") }
+func BoxTypeAC3() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 func init() {
 	AddAnyTypeBoxDef(&AudioSampleEntry{}, BoxTypeAC3())
@@ -14,7 +14,7 @@ func init() {
 
 // https://www.etsi.org/deliver/etsi_ts/102300_102399/102366/01.04.01_60/ts_102366v010401p.pdf
 
-func BoxTypeDAC3() BoxType { return StrToBoxType("dac3") }
+func BoxTypeDAC3() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 func init() {
 	AddBoxDef(&Dac3{})
@@ -31,6 +31,4 @@ type Dac3 struct {
 	Reserved    uint8 `mp4:"6,size=5,const=0"`
 }
 
-func (Dac3) GetType() BoxType {
-	return BoxTypeDAC3()
-}
+func (Dac3) GetType() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }

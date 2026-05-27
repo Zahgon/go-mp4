@@ -24,74 +24,22 @@ type reader struct {
 	width  uint
 }
 
-func NewReader(r io.Reader) Reader {
-	return &reader{reader: r}
-}
+func NewReader(r io.Reader) Reader { _ = "STUB: not implemented"; return *new(Reader) }
 
-func (r *reader) Read(p []byte) (n int, err error) {
-	if r.width != 0 {
-		return 0, ErrInvalidAlignment
-	}
-	return r.reader.Read(p)
-}
+func (r *reader) Read(p []byte) (n int, err error) { _ = "STUB: not implemented"; return 0, nil }
 
-func (r *reader) ReadBits(size uint) ([]byte, error) {
-	bytes := (size + 7) / 8
-	data := make([]byte, bytes)
-	offset := (bytes * 8) - (size)
+func (r *reader) ReadBits(size uint) ([]byte, error) { _ = "STUB: not implemented"; return nil, nil }
 
-	for i := uint(0); i < size; i++ {
-		bit, err := r.ReadBit()
-		if err != nil {
-			return nil, err
-		}
-
-		byteIdx := (offset + i) / 8
-		bitIdx := 7 - (offset+i)%8
-		if bit {
-			data[byteIdx] |= 0x1 << bitIdx
-		}
-	}
-
-	return data, nil
-}
-
-func (r *reader) ReadBit() (bool, error) {
-	if r.width == 0 {
-		buf := make([]byte, 1)
-		if n, err := r.reader.Read(buf); err != nil {
-			return false, err
-		} else if n != 1 {
-			return false, ErrDiscouragedReader
-		}
-		r.octet = buf[0]
-		r.width = 8
-	}
-
-	r.width--
-	return (r.octet>>r.width)&0x01 != 0, nil
-}
+func (r *reader) ReadBit() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 type readSeeker struct {
 	reader
 	seeker io.Seeker
 }
 
-func NewReadSeeker(r io.ReadSeeker) ReadSeeker {
-	return &readSeeker{
-		reader: reader{reader: r},
-		seeker: r,
-	}
-}
+func NewReadSeeker(r io.ReadSeeker) ReadSeeker { _ = "STUB: not implemented"; return *new(ReadSeeker) }
 
 func (r *readSeeker) Seek(offset int64, whence int) (int64, error) {
-	if whence == io.SeekCurrent && r.reader.width != 0 {
-		return 0, ErrInvalidAlignment
-	}
-	n, err := r.seeker.Seek(offset, whence)
-	if err != nil {
-		return n, err
-	}
-	r.reader.width = 0
-	return n, nil
+	_ = "STUB: not implemented"
+	return 0, nil
 }

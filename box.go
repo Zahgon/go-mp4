@@ -1,7 +1,6 @@
 package mp4
 
 import (
-	"errors"
 	"io"
 	"math"
 
@@ -37,41 +36,52 @@ type BaseCustomFieldObject struct {
 
 // GetFieldSize returns size of dynamic field
 func (box *BaseCustomFieldObject) GetFieldSize(string, Context) uint {
-	panic(errors.New("GetFieldSize not implemented"))
+	_ = "STUB: not implemented"
+	return 0
 }
 
 // GetFieldLength returns length of dynamic field
 func (box *BaseCustomFieldObject) GetFieldLength(string, Context) uint {
-	panic(errors.New("GetFieldLength not implemented"))
+	_ = "STUB: not implemented"
+	return 0
 }
 
 // IsOptFieldEnabled check whether if the optional field is enabled
 func (box *BaseCustomFieldObject) IsOptFieldEnabled(string, Context) bool {
+	_ = "STUB: not implemented"
+
+	// StringifyField returns field value as string
 	return false
 }
 
-// StringifyField returns field value as string
 func (box *BaseCustomFieldObject) StringifyField(string, string, int, Context) (string, bool) {
+	_ = "STUB: not implemented"
 	return "", false
 }
 
 func (*BaseCustomFieldObject) IsPString(name string, bytes []byte, remainingSize uint64, ctx Context) bool {
-	return true
+	_ = "STUB: not implemented"
+	return false
 }
 
 func (*BaseCustomFieldObject) BeforeUnmarshal(io.ReadSeeker, uint64, Context) (uint64, bool, error) {
+	_ = "STUB: not implemented"
 	return 0, false, nil
 }
 
 func (*BaseCustomFieldObject) OnReadField(string, bitio.ReadSeeker, uint64, Context) (uint64, bool, error) {
+	_ = "STUB: not implemented"
 	return 0, false, nil
 }
 
 func (*BaseCustomFieldObject) OnWriteField(string, bitio.Writer, Context) (uint64, bool, error) {
-	return 0, false, nil
+	_ = "STUB: not implemented"
+	return 0,
+
+		// IImmutableBox is common interface of box
+		false, nil
 }
 
-// IImmutableBox is common interface of box
 type IImmutableBox interface {
 	ICustomFieldObject
 
@@ -111,36 +121,54 @@ type Box struct {
 
 // GetVersion returns the box version
 func (box *Box) GetVersion() uint8 {
+	_ = "STUB: not implemented"
+
+	// SetVersion sets the box version
 	return 0
 }
 
-// SetVersion sets the box version
 func (box *Box) SetVersion(uint8) {
+	_ = "STUB: not implemented"
+
+	// GetFlags returns the flags
+	return
 }
 
-// GetFlags returns the flags
 func (box *Box) GetFlags() uint32 {
-	return 0x000000
+	_ = "STUB: not implemented"
+
+	// CheckFlag checks the flag status
+	return 0
 }
 
-// CheckFlag checks the flag status
 func (box *Box) CheckFlag(flag uint32) bool {
-	return true
+	_ = "STUB: not implemented"
+
+	// SetFlags sets the flags
+	return false
 }
 
-// SetFlags sets the flags
 func (box *Box) SetFlags(uint32) {
+	_ = "STUB: not implemented"
+
+	// AddFlag adds the flag
+	return
 }
 
-// AddFlag adds the flag
 func (box *Box) AddFlag(flag uint32) {
+	_ = "STUB: not implemented"
+
+	// RemoveFlag removes the flag
+	return
 }
 
-// RemoveFlag removes the flag
 func (box *Box) RemoveFlag(flag uint32) {
+	_ = "STUB: not implemented"
+
+	// FullBox is ISOBMFF FullBox
+	return
 }
 
-// FullBox is ISOBMFF FullBox
 type FullBox struct {
 	BaseCustomFieldObject
 	Version uint8   `mp4:"0,size=8"`
@@ -149,40 +177,25 @@ type FullBox struct {
 
 // GetVersion returns the box version
 func (box *FullBox) GetVersion() uint8 {
-	return box.Version
+	_ = "STUB: not implemented"
+
+	// SetVersion sets the box version
+	return 0
 }
 
-// SetVersion sets the box version
-func (box *FullBox) SetVersion(version uint8) {
-	box.Version = version
-}
+func (box *FullBox) SetVersion(version uint8) { _ = "STUB: not implemented"; return }
 
 // GetFlags returns the flags
-func (box *FullBox) GetFlags() uint32 {
-	flag := uint32(box.Flags[0]) << 16
-	flag ^= uint32(box.Flags[1]) << 8
-	flag ^= uint32(box.Flags[2])
-	return flag
-}
+func (box *FullBox) GetFlags() uint32 { _ = "STUB: not implemented"; return 0 }
 
 // CheckFlag checks the flag status
-func (box *FullBox) CheckFlag(flag uint32) bool {
-	return box.GetFlags()&flag != 0
-}
+func (box *FullBox) CheckFlag(flag uint32) bool { _ = "STUB: not implemented"; return false }
 
 // SetFlags sets the flags
-func (box *FullBox) SetFlags(flags uint32) {
-	box.Flags[0] = byte(flags >> 16)
-	box.Flags[1] = byte(flags >> 8)
-	box.Flags[2] = byte(flags)
-}
+func (box *FullBox) SetFlags(flags uint32) { _ = "STUB: not implemented"; return }
 
 // AddFlag adds the flag
-func (box *FullBox) AddFlag(flag uint32) {
-	box.SetFlags(box.GetFlags() | flag)
-}
+func (box *FullBox) AddFlag(flag uint32) { _ = "STUB: not implemented"; return }
 
 // RemoveFlag removes the flag
-func (box *FullBox) RemoveFlag(flag uint32) {
-	box.SetFlags(box.GetFlags() & (^flag))
-}
+func (box *FullBox) RemoveFlag(flag uint32) { _ = "STUB: not implemented"; return }

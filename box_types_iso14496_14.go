@@ -1,12 +1,10 @@
 package mp4
 
-import "fmt"
-
 /*************************** esds ****************************/
 
 // https://developer.apple.com/library/content/documentation/QuickTime/QTFF/QTFFChap3/qtff3.html
 
-func BoxTypeEsds() BoxType { return StrToBoxType("esds") }
+func BoxTypeEsds() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 func init() {
 	AddBoxDef(&Esds{}, 0)
@@ -26,9 +24,7 @@ type Esds struct {
 }
 
 // GetType returns the BoxType
-func (*Esds) GetType() BoxType {
-	return BoxTypeEsds()
-}
+func (*Esds) GetType() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 type Descriptor struct {
 	BaseCustomFieldObject
@@ -41,43 +37,19 @@ type Descriptor struct {
 
 // GetFieldLength returns length of dynamic field
 func (ds *Descriptor) GetFieldLength(name string, ctx Context) uint {
-	switch name {
-	case "Data":
-		return uint(ds.Size)
-	}
-	panic(fmt.Errorf("invalid name of dynamic-length field: boxType=esds fieldName=%s", name))
+	_ = "STUB: not implemented"
+	return 0
 }
 
 func (ds *Descriptor) IsOptFieldEnabled(name string, ctx Context) bool {
-	switch ds.Tag {
-	case ESDescrTag:
-		return name == "ESDescriptor"
-	case DecoderConfigDescrTag:
-		return name == "DecoderConfigDescriptor"
-	default:
-		return name == "Data"
-	}
+	_ = "STUB: not implemented"
+	return false
 }
 
 // StringifyField returns field value as string
 func (ds *Descriptor) StringifyField(name string, indent string, depth int, ctx Context) (string, bool) {
-	switch name {
-	case "Tag":
-		switch ds.Tag {
-		case ESDescrTag:
-			return "ESDescr", true
-		case DecoderConfigDescrTag:
-			return "DecoderConfigDescr", true
-		case DecSpecificInfoTag:
-			return "DecSpecificInfo", true
-		case SLConfigDescrTag:
-			return "SLConfigDescr", true
-		default:
-			return "", false
-		}
-	default:
-		return "", false
-	}
+	_ = "STUB: not implemented"
+	return "", false
 }
 
 type ESDescriptor struct {
@@ -94,24 +66,13 @@ type ESDescriptor struct {
 }
 
 func (esds *ESDescriptor) GetFieldLength(name string, ctx Context) uint {
-	switch name {
-	case "URLString":
-		return uint(esds.URLLength)
-	}
-	panic(fmt.Errorf("invalid name of dynamic-length field: boxType=ESDescriptor fieldName=%s", name))
+	_ = "STUB: not implemented"
+	return 0
 }
 
 func (esds *ESDescriptor) IsOptFieldEnabled(name string, ctx Context) bool {
-	switch name {
-	case "DependsOnESID":
-		return esds.StreamDependenceFlag
-	case "URLLength", "URLString":
-		return esds.UrlFlag
-	case "OCRESID":
-		return esds.OcrStreamFlag
-	default:
-		return false
-	}
+	_ = "STUB: not implemented"
+	return false
 }
 
 type DecoderConfigDescriptor struct {

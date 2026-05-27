@@ -2,7 +2,7 @@ package mp4
 
 /*************************** ipcm ****************************/
 
-func BoxTypeIpcm() BoxType { return StrToBoxType("ipcm") }
+func BoxTypeIpcm() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 func init() {
 	AddAnyTypeBoxDef(&AudioSampleEntry{}, BoxTypeIpcm())
@@ -10,7 +10,7 @@ func init() {
 
 /*************************** fpcm ****************************/
 
-func BoxTypeFpcm() BoxType { return StrToBoxType("fpcm") }
+func BoxTypeFpcm() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 func init() {
 	AddAnyTypeBoxDef(&AudioSampleEntry{}, BoxTypeFpcm())
@@ -18,7 +18,7 @@ func init() {
 
 /*************************** pcmC ****************************/
 
-func BoxTypePcmC() BoxType { return StrToBoxType("pcmC") }
+func BoxTypePcmC() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 func init() {
 	AddBoxDef(&PcmC{}, 0, 1)
@@ -30,6 +30,4 @@ type PcmC struct {
 	PCMSampleSize uint8 `mp4:"1,size=8"`
 }
 
-func (PcmC) GetType() BoxType {
-	return BoxTypePcmC()
-}
+func (PcmC) GetType() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }

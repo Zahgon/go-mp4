@@ -4,7 +4,7 @@ package mp4
 
 // https://aomediacodec.github.io/av1-isobmff
 
-func BoxTypeAv01() BoxType { return StrToBoxType("av01") }
+func BoxTypeAv01() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 func init() {
 	AddAnyTypeBoxDef(&VisualSampleEntry{}, BoxTypeAv01())
@@ -14,7 +14,7 @@ func init() {
 
 // https://aomediacodec.github.io/av1-isobmff
 
-func BoxTypeAv1C() BoxType { return StrToBoxType("av1C") }
+func BoxTypeAv1C() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 func init() {
 	AddBoxDef(&Av1C{})
@@ -39,6 +39,4 @@ type Av1C struct {
 	ConfigOBUs                       []uint8 `mp4:"14,size=8"`
 }
 
-func (Av1C) GetType() BoxType {
-	return BoxTypeAv1C()
-}
+func (Av1C) GetType() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }

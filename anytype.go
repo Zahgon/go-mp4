@@ -10,10 +10,6 @@ type AnyTypeBox struct {
 	Type BoxType
 }
 
-func (e *AnyTypeBox) GetType() BoxType {
-	return e.Type
-}
+func (e *AnyTypeBox) GetType() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
-func (e *AnyTypeBox) SetType(boxType BoxType) {
-	e.Type = boxType
-}
+func (e *AnyTypeBox) SetType(boxType BoxType) { _ = "STUB: not implemented"; return }

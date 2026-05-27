@@ -1,14 +1,7 @@
 package edit
 
 import (
-	"flag"
-	"fmt"
 	"math"
-	"os"
-	"strings"
-
-	"github.com/abema/go-mp4"
-	"github.com/sunfish-shogi/bufseekio"
 )
 
 const UNoValue = math.MaxUint64
@@ -19,14 +12,7 @@ type Values struct {
 
 type Boxes []string
 
-func (b Boxes) Exists(boxType string) bool {
-	for _, t := range b {
-		if t == boxType {
-			return true
-		}
-	}
-	return false
-}
+func (b Boxes) Exists(boxType string) bool { _ = "STUB: not implemented"; return false }
 
 type Config struct {
 	values    Values
@@ -35,93 +21,22 @@ type Config struct {
 
 var config Config
 
-func Main(args []string) int {
-	flagSet := flag.NewFlagSet("edit", flag.ExitOnError)
-	flagSet.Uint64Var(&config.values.BaseMediaDecodeTime, "base_media_decode_time", UNoValue, "set new value to base_media_decode_time")
-	dropBoxes := flagSet.String("drop", "", "drop boxes")
-	flagSet.Usage = func() {
-		println("USAGE: mp4tool edit [OPTIONS] INPUT.mp4 OUTPUT.mp4")
-		flagSet.PrintDefaults()
-	}
-	flagSet.Parse(args)
+func Main(args []string) int { _ = "STUB: not implemented"; return 0 }
 
-	if len(flagSet.Args()) < 2 {
-		flagSet.Usage()
-		return 1
-	}
+func editFile(inputPath, outputPath string) error { _ = "STUB: not implemented"; return nil }
 
-	config.dropBoxes = strings.Split(*dropBoxes, ",")
+// drop
 
-	inputPath := flagSet.Args()[0]
-	outputPath := flagSet.Args()[1]
+// copy all data
 
-	err := editFile(inputPath, outputPath)
-	if err != nil {
-		fmt.Println("Error:", err)
-		return 1
-	}
-	return 0
-}
+// write header
 
-func editFile(inputPath, outputPath string) error {
-	inputFile, err := os.Open(inputPath)
-	if err != nil {
-		return err
-	}
-	defer inputFile.Close()
+// read payload
 
-	outputFile, err := os.Create(outputPath)
-	if err != nil {
-		return err
-	}
-	defer outputFile.Close()
+// edit some fields
 
-	r := bufseekio.NewReadSeeker(inputFile, 128*1024, 4)
-	w := mp4.NewWriter(outputFile)
-	_, err = mp4.ReadBoxStructure(r, func(h *mp4.ReadHandle) (interface{}, error) {
-		if config.dropBoxes.Exists(h.BoxInfo.Type.String()) {
-			// drop
-			return uint64(0), nil
-		}
+// write payload
 
-		if !h.BoxInfo.IsSupportedType() || h.BoxInfo.Type == mp4.BoxTypeMdat() {
-			// copy all data
-			return nil, w.CopyBox(r, &h.BoxInfo)
-		}
+// expand all of offsprings
 
-		// write header
-		_, err := w.StartBox(&h.BoxInfo)
-		if err != nil {
-			return nil, err
-		}
-		// read payload
-		box, _, err := h.ReadPayload()
-		if err != nil {
-			return nil, err
-		}
-		// edit some fields
-		switch h.BoxInfo.Type {
-		case mp4.BoxTypeTfdt():
-			tfdt := box.(*mp4.Tfdt)
-			if config.values.BaseMediaDecodeTime != UNoValue {
-				if tfdt.GetVersion() == 0 {
-					tfdt.BaseMediaDecodeTimeV0 = uint32(config.values.BaseMediaDecodeTime)
-				} else {
-					tfdt.BaseMediaDecodeTimeV1 = config.values.BaseMediaDecodeTime
-				}
-			}
-		}
-		// write payload
-		if _, err := mp4.Marshal(w, box, h.BoxInfo.Context); err != nil {
-			return nil, err
-		}
-		// expand all of offsprings
-		if _, err := h.Expand(); err != nil {
-			return nil, err
-		}
-		// rewrite box size
-		_, err = w.EndBox()
-		return nil, err
-	})
-	return err
-}
+// rewrite box size

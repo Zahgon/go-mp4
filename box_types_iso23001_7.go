@@ -1,15 +1,8 @@
 package mp4
 
-import (
-	"bytes"
-	"fmt"
-
-	"github.com/google/uuid"
-)
-
 /*************************** pssh ****************************/
 
-func BoxTypePssh() BoxType { return StrToBoxType("pssh") }
+func BoxTypePssh() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 func init() {
 	AddBoxDef(&Pssh{}, 0, 1)
@@ -31,43 +24,26 @@ type PsshKID struct {
 
 // GetFieldLength returns length of dynamic field
 func (pssh *Pssh) GetFieldLength(name string, ctx Context) uint {
-	switch name {
-	case "KIDs":
-		return uint(pssh.KIDCount)
-	case "Data":
-		return uint(pssh.DataSize)
-	}
-	panic(fmt.Errorf("invalid name of dynamic-length field: boxType=pssh fieldName=%s", name))
+	_ = "STUB: not implemented"
+	return 0
 }
 
 // StringifyField returns field value as string
 func (pssh *Pssh) StringifyField(name string, indent string, depth int, ctx Context) (string, bool) {
-	switch name {
-	case "KIDs":
-		buf := bytes.NewBuffer(nil)
-		buf.WriteString("[")
-		for i, e := range pssh.KIDs {
-			if i != 0 {
-				buf.WriteString(", ")
-			}
-			buf.WriteString(uuid.UUID(e.KID).String())
-		}
-		buf.WriteString("]")
-		return buf.String(), true
-
-	default:
-		return "", false
-	}
+	_ = "STUB: not implemented"
+	return "", false
 }
 
 // GetType returns the BoxType
 func (*Pssh) GetType() BoxType {
-	return BoxTypePssh()
+	_ = "STUB: not implemented"
+	return
+
+	/*************************** tenc ****************************/
+	*new(BoxType)
 }
 
-/*************************** tenc ****************************/
-
-func BoxTypeTenc() BoxType { return StrToBoxType("tenc") }
+func BoxTypeTenc() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 func init() {
 	AddBoxDef(&Tenc{}, 0, 1)
@@ -87,22 +63,14 @@ type Tenc struct {
 }
 
 func (tenc *Tenc) IsOptFieldEnabled(name string, ctx Context) bool {
-	switch name {
-	case "DefaultConstantIVSize", "DefaultConstantIV":
-		return tenc.DefaultIsProtected == 1 && tenc.DefaultPerSampleIVSize == 0
-	}
+	_ = "STUB: not implemented"
 	return false
 }
 
 func (tenc *Tenc) GetFieldLength(name string, ctx Context) uint {
-	switch name {
-	case "DefaultConstantIV":
-		return uint(tenc.DefaultConstantIVSize)
-	}
-	panic(fmt.Errorf("invalid name of dynamic-length field: boxType=tenc fieldName=%s", name))
+	_ = "STUB: not implemented"
+	return 0
 }
 
 // GetType returns the BoxType
-func (*Tenc) GetType() BoxType {
-	return BoxTypeTenc()
-}
+func (*Tenc) GetType() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }

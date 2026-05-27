@@ -1,18 +1,14 @@
 package mp4
 
 import (
-	"errors"
-	"fmt"
 	"io"
-	"strings"
 
 	"github.com/abema/go-mp4/internal/bitio"
-	"github.com/abema/go-mp4/internal/util"
 )
 
 /*************************** btrt ****************************/
 
-func BoxTypeBtrt() BoxType { return StrToBoxType("btrt") }
+func BoxTypeBtrt() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 func init() {
 	AddBoxDef(&Btrt{}, 0)
@@ -27,12 +23,14 @@ type Btrt struct {
 
 // GetType returns the BoxType
 func (*Btrt) GetType() BoxType {
-	return BoxTypeBtrt()
+	_ = "STUB: not implemented"
+	return
+
+	/*************************** co64 ****************************/
+	*new(BoxType)
 }
 
-/*************************** co64 ****************************/
-
-func BoxTypeCo64() BoxType { return StrToBoxType("co64") }
+func BoxTypeCo64() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 func init() {
 	AddBoxDef(&Co64{}, 0)
@@ -46,21 +44,21 @@ type Co64 struct {
 
 // GetType returns the BoxType
 func (*Co64) GetType() BoxType {
-	return BoxTypeCo64()
+	_ = "STUB: not implemented"
+	return *
+
+	// GetFieldLength returns length of dynamic field
+	new(BoxType)
 }
 
-// GetFieldLength returns length of dynamic field
 func (co64 *Co64) GetFieldLength(name string, ctx Context) uint {
-	switch name {
-	case "ChunkOffset":
-		return uint(co64.EntryCount)
-	}
-	panic(fmt.Errorf("invalid name of dynamic-length field: boxType=co64 fieldName=%s", name))
+	_ = "STUB: not implemented"
+	return 0
 }
 
 /*************************** colr ****************************/
 
-func BoxTypeColr() BoxType { return StrToBoxType("colr") }
+func BoxTypeColr() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 func init() {
 	AddBoxDef(&Colr{})
@@ -79,34 +77,20 @@ type Colr struct {
 }
 
 func (colr *Colr) IsOptFieldEnabled(name string, ctx Context) bool {
-	switch colr.ColourType {
-	case [4]byte{'n', 'c', 'l', 'x'}:
-		switch name {
-		case "ColourType",
-			"ColourPrimaries",
-			"TransferCharacteristics",
-			"MatrixCoefficients",
-			"FullRangeFlag",
-			"Reserved":
-			return true
-		default:
-			return false
-		}
-	case [4]byte{'r', 'I', 'C', 'C'}, [4]byte{'p', 'r', 'o', 'f'}:
-		return name == "Profile"
-	default:
-		return name == "Unknown"
-	}
+	_ = "STUB: not implemented"
+	return false
 }
 
 // GetType returns the BoxType
 func (*Colr) GetType() BoxType {
-	return BoxTypeColr()
+	_ = "STUB: not implemented"
+	return
+
+	/*************************** cslg ****************************/
+	*new(BoxType)
 }
 
-/*************************** cslg ****************************/
-
-func BoxTypeCslg() BoxType { return StrToBoxType("cslg") }
+func BoxTypeCslg() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 func init() {
 	AddBoxDef(&Cslg{}, 0, 1)
@@ -127,68 +111,21 @@ type Cslg struct {
 }
 
 // GetType returns the BoxType
-func (*Cslg) GetType() BoxType {
-	return BoxTypeCslg()
-}
+func (*Cslg) GetType() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
-func (cslg *Cslg) GetCompositionToDTSShift() int64 {
-	switch cslg.GetVersion() {
-	case 0:
-		return int64(cslg.CompositionToDTSShiftV0)
-	case 1:
-		return cslg.CompositionToDTSShiftV1
-	default:
-		return 0
-	}
-}
+func (cslg *Cslg) GetCompositionToDTSShift() int64 { _ = "STUB: not implemented"; return 0 }
 
-func (cslg *Cslg) GetLeastDecodeToDisplayDelta() int64 {
-	switch cslg.GetVersion() {
-	case 0:
-		return int64(cslg.LeastDecodeToDisplayDeltaV0)
-	case 1:
-		return cslg.LeastDecodeToDisplayDeltaV1
-	default:
-		return 0
-	}
-}
+func (cslg *Cslg) GetLeastDecodeToDisplayDelta() int64 { _ = "STUB: not implemented"; return 0 }
 
-func (cslg *Cslg) GetGreatestDecodeToDisplayDelta() int64 {
-	switch cslg.GetVersion() {
-	case 0:
-		return int64(cslg.GreatestDecodeToDisplayDeltaV0)
-	case 1:
-		return cslg.GreatestDecodeToDisplayDeltaV1
-	default:
-		return 0
-	}
-}
+func (cslg *Cslg) GetGreatestDecodeToDisplayDelta() int64 { _ = "STUB: not implemented"; return 0 }
 
-func (cslg *Cslg) GetCompositionStartTime() int64 {
-	switch cslg.GetVersion() {
-	case 0:
-		return int64(cslg.CompositionStartTimeV0)
-	case 1:
-		return cslg.CompositionStartTimeV1
-	default:
-		return 0
-	}
-}
+func (cslg *Cslg) GetCompositionStartTime() int64 { _ = "STUB: not implemented"; return 0 }
 
-func (cslg *Cslg) GetCompositionEndTime() int64 {
-	switch cslg.GetVersion() {
-	case 0:
-		return int64(cslg.CompositionEndTimeV0)
-	case 1:
-		return cslg.CompositionEndTimeV1
-	default:
-		return 0
-	}
-}
+func (cslg *Cslg) GetCompositionEndTime() int64 { _ = "STUB: not implemented"; return 0 }
 
 /*************************** ctts ****************************/
 
-func BoxTypeCtts() BoxType { return StrToBoxType("ctts") }
+func BoxTypeCtts() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 func init() {
 	AddBoxDef(&Ctts{}, 0, 1)
@@ -208,32 +145,23 @@ type CttsEntry struct {
 
 // GetType returns the BoxType
 func (*Ctts) GetType() BoxType {
-	return BoxTypeCtts()
+	_ = "STUB: not implemented"
+	return *
+
+	// GetFieldLength returns length of dynamic field
+	new(BoxType)
 }
 
-// GetFieldLength returns length of dynamic field
 func (ctts *Ctts) GetFieldLength(name string, ctx Context) uint {
-	switch name {
-	case "Entries":
-		return uint(ctts.EntryCount)
-	}
-	panic(fmt.Errorf("invalid name of dynamic-length field: boxType=ctts fieldName=%s", name))
+	_ = "STUB: not implemented"
+	return 0
 }
 
-func (ctts *Ctts) GetSampleOffset(index int) int64 {
-	switch ctts.GetVersion() {
-	case 0:
-		return int64(ctts.Entries[index].SampleOffsetV0)
-	case 1:
-		return int64(ctts.Entries[index].SampleOffsetV1)
-	default:
-		return 0
-	}
-}
+func (ctts *Ctts) GetSampleOffset(index int) int64 { _ = "STUB: not implemented"; return 0 }
 
 /*************************** dinf ****************************/
 
-func BoxTypeDinf() BoxType { return StrToBoxType("dinf") }
+func BoxTypeDinf() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 func init() {
 	AddBoxDef(&Dinf{})
@@ -246,14 +174,16 @@ type Dinf struct {
 
 // GetType returns the BoxType
 func (*Dinf) GetType() BoxType {
-	return BoxTypeDinf()
+	_ = "STUB: not implemented"
+	return
+
+	/*************************** dref ****************************/
+	*new(BoxType)
 }
 
-/*************************** dref ****************************/
-
-func BoxTypeDref() BoxType { return StrToBoxType("dref") }
-func BoxTypeUrl() BoxType  { return StrToBoxType("url ") }
-func BoxTypeUrn() BoxType  { return StrToBoxType("urn ") }
+func BoxTypeDref() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
+func BoxTypeUrl() BoxType  { _ = "STUB: not implemented"; return *new(BoxType) }
+func BoxTypeUrn() BoxType  { _ = "STUB: not implemented"; return *new(BoxType) }
 
 func init() {
 	AddBoxDef(&Dref{}, 0)
@@ -268,18 +198,14 @@ type Dref struct {
 }
 
 // GetType returns the BoxType
-func (*Dref) GetType() BoxType {
-	return BoxTypeDref()
-}
+func (*Dref) GetType() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 type Url struct {
 	FullBox  `mp4:"0,extend"`
 	Location string `mp4:"1,string,nopt=0x000001"`
 }
 
-func (*Url) GetType() BoxType {
-	return BoxTypeUrl()
-}
+func (*Url) GetType() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 const UrlSelfContained = 0x000001
 
@@ -289,15 +215,13 @@ type Urn struct {
 	Location string `mp4:"2,string,nopt=0x000001"`
 }
 
-func (*Urn) GetType() BoxType {
-	return BoxTypeUrn()
-}
+func (*Urn) GetType() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 const UrnSelfContained = 0x000001
 
 /*************************** edts ****************************/
 
-func BoxTypeEdts() BoxType { return StrToBoxType("edts") }
+func BoxTypeEdts() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 func init() {
 	AddBoxDef(&Edts{})
@@ -310,12 +234,14 @@ type Edts struct {
 
 // GetType returns the BoxType
 func (*Edts) GetType() BoxType {
-	return BoxTypeEdts()
+	_ = "STUB: not implemented"
+	return
+
+	/*************************** elst ****************************/
+	*new(BoxType)
 }
 
-/*************************** elst ****************************/
-
-func BoxTypeElst() BoxType { return StrToBoxType("elst") }
+func BoxTypeElst() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 func init() {
 	AddBoxDef(&Elst{}, 0, 1)
@@ -339,65 +265,38 @@ type ElstEntry struct {
 
 // GetType returns the BoxType
 func (*Elst) GetType() BoxType {
-	return BoxTypeElst()
+	_ = "STUB: not implemented"
+	return *
+
+	// GetFieldSize returns size of dynamic field
+	new(BoxType)
 }
 
-// GetFieldSize returns size of dynamic field
-func (elst *Elst) GetFieldSize(name string, ctx Context) uint {
-	switch name {
-	case "Entries":
-		switch elst.GetVersion() {
-		case 0:
-			return 0 +
-				/* segmentDurationV0 */ 32 +
-				/* mediaTimeV0       */ 32 +
-				/* mediaRateInteger  */ 16 +
-				/* mediaRateFraction */ 16
-		case 1:
-			return 0 +
-				/* segmentDurationV1 */ 64 +
-				/* mediaTimeV1       */ 64 +
-				/* mediaRateInteger  */ 16 +
-				/* mediaRateFraction */ 16
-		}
-	}
-	panic(fmt.Errorf("invalid name of dynamic-size field: boxType=elst fieldName=%s", name))
-}
+func (elst *Elst) GetFieldSize(name string, ctx Context) uint { _ = "STUB: not implemented"; return 0 }
+
+/* segmentDurationV0 */
+/* mediaTimeV0       */
+/* mediaRateInteger  */
+/* mediaRateFraction */
+
+/* segmentDurationV1 */
+/* mediaTimeV1       */
+/* mediaRateInteger  */
+/* mediaRateFraction */
 
 // GetFieldLength returns length of dynamic field
 func (elst *Elst) GetFieldLength(name string, ctx Context) uint {
-	switch name {
-	case "Entries":
-		return uint(elst.EntryCount)
-	}
-	panic(fmt.Errorf("invalid name of dynamic-length field: boxType=elst fieldName=%s", name))
+	_ = "STUB: not implemented"
+	return 0
 }
 
-func (elst *Elst) GetSegmentDuration(index int) uint64 {
-	switch elst.GetVersion() {
-	case 0:
-		return uint64(elst.Entries[index].SegmentDurationV0)
-	case 1:
-		return elst.Entries[index].SegmentDurationV1
-	default:
-		return 0
-	}
-}
+func (elst *Elst) GetSegmentDuration(index int) uint64 { _ = "STUB: not implemented"; return 0 }
 
-func (elst *Elst) GetMediaTime(index int) int64 {
-	switch elst.GetVersion() {
-	case 0:
-		return int64(elst.Entries[index].MediaTimeV0)
-	case 1:
-		return elst.Entries[index].MediaTimeV1
-	default:
-		return 0
-	}
-}
+func (elst *Elst) GetMediaTime(index int) int64 { _ = "STUB: not implemented"; return 0 }
 
 /*************************** emsg ****************************/
 
-func BoxTypeEmsg() BoxType { return StrToBoxType("emsg") }
+func BoxTypeEmsg() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 func init() {
 	AddBoxDef(&Emsg{}, 0, 1)
@@ -417,59 +316,25 @@ type Emsg struct {
 }
 
 func (emsg *Emsg) OnReadField(name string, r bitio.ReadSeeker, leftBits uint64, ctx Context) (rbits uint64, override bool, err error) {
-	if emsg.GetVersion() == 0 {
-		return
-	}
-	switch name {
-	case "SchemeIdUri", "Value":
-		override = true
-		return
-	case "MessageData":
-		emsg.SchemeIdUri, err = util.ReadString(r)
-		if err != nil {
-			return
-		}
-		emsg.Value, err = util.ReadString(r)
-		if err != nil {
-			return
-		}
-		rbits += uint64(len(emsg.SchemeIdUri)+len(emsg.Value)+2) * 8
-		return
-	default:
-		return
-	}
+	_ = "STUB: not implemented"
+	return 0, false, nil
 }
 
 func (emsg *Emsg) OnWriteField(name string, w bitio.Writer, ctx Context) (wbits uint64, override bool, err error) {
-	if emsg.GetVersion() == 0 {
-		return
-	}
-	switch name {
-	case "SchemeIdUri", "Value":
-		override = true
-		return
-	case "MessageData":
-		if err = util.WriteString(w, emsg.SchemeIdUri); err != nil {
-			return
-		}
-		if err = util.WriteString(w, emsg.Value); err != nil {
-			return
-		}
-		wbits += uint64(len(emsg.SchemeIdUri)+len(emsg.Value)+2) * 8
-		return
-	default:
-		return
-	}
+	_ = "STUB: not implemented"
+	return 0, false, nil
 }
 
 // GetType returns the BoxType
 func (*Emsg) GetType() BoxType {
-	return BoxTypeEmsg()
+	_ = "STUB: not implemented"
+	return
+
+	/*************************** fiel ****************************/
+	*new(BoxType)
 }
 
-/*************************** fiel ****************************/
-
-func BoxTypeFiel() BoxType { return StrToBoxType("fiel") }
+func BoxTypeFiel() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 func init() {
 	AddBoxDef(&Fiel{})
@@ -482,13 +347,15 @@ type Fiel struct {
 }
 
 func (Fiel) GetType() BoxType {
-	return BoxTypeFiel()
+	_ = "STUB: not implemented"
+	return
+
+	/************************ free, skip *************************/
+	*new(BoxType)
 }
 
-/************************ free, skip *************************/
-
-func BoxTypeFree() BoxType { return StrToBoxType("free") }
-func BoxTypeSkip() BoxType { return StrToBoxType("skip") }
+func BoxTypeFree() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
+func BoxTypeSkip() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 func init() {
 	AddBoxDef(&Free{})
@@ -502,19 +369,19 @@ type FreeSpace struct {
 
 type Free FreeSpace
 
-func (*Free) GetType() BoxType {
-	return BoxTypeFree()
-}
+func (*Free) GetType() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 type Skip FreeSpace
 
 func (*Skip) GetType() BoxType {
-	return BoxTypeSkip()
+	_ = "STUB: not implemented"
+	return
+
+	/*************************** frma ****************************/
+	*new(BoxType)
 }
 
-/*************************** frma ****************************/
-
-func BoxTypeFrma() BoxType { return StrToBoxType("frma") }
+func BoxTypeFrma() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 func init() {
 	AddBoxDef(&Frma{})
@@ -528,30 +395,32 @@ type Frma struct {
 
 // GetType returns the BoxType
 func (*Frma) GetType() BoxType {
-	return BoxTypeFrma()
+	_ = "STUB: not implemented"
+	return
+
+	/*************************** ftyp ****************************/
+	*new(BoxType)
 }
 
-/*************************** ftyp ****************************/
-
-func BoxTypeFtyp() BoxType { return StrToBoxType("ftyp") }
+func BoxTypeFtyp() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 func init() {
 	AddBoxDef(&Ftyp{})
 }
 
-func BrandQT() [4]byte   { return [4]byte{'q', 't', ' ', ' '} }
-func BrandISOM() [4]byte { return [4]byte{'i', 's', 'o', 'm'} }
-func BrandISO2() [4]byte { return [4]byte{'i', 's', 'o', '2'} }
-func BrandISO3() [4]byte { return [4]byte{'i', 's', 'o', '3'} }
-func BrandISO4() [4]byte { return [4]byte{'i', 's', 'o', '4'} }
-func BrandISO5() [4]byte { return [4]byte{'i', 's', 'o', '5'} }
-func BrandISO6() [4]byte { return [4]byte{'i', 's', 'o', '6'} }
-func BrandISO7() [4]byte { return [4]byte{'i', 's', 'o', '7'} }
-func BrandISO8() [4]byte { return [4]byte{'i', 's', 'o', '8'} }
-func BrandISO9() [4]byte { return [4]byte{'i', 's', 'o', '9'} }
-func BrandAVC1() [4]byte { return [4]byte{'a', 'v', 'c', '1'} }
-func BrandMP41() [4]byte { return [4]byte{'m', 'p', '4', '1'} }
-func BrandMP71() [4]byte { return [4]byte{'m', 'p', '7', '1'} }
+func BrandQT() [4]byte   { _ = "STUB: not implemented"; return nil }
+func BrandISOM() [4]byte { _ = "STUB: not implemented"; return nil }
+func BrandISO2() [4]byte { _ = "STUB: not implemented"; return nil }
+func BrandISO3() [4]byte { _ = "STUB: not implemented"; return nil }
+func BrandISO4() [4]byte { _ = "STUB: not implemented"; return nil }
+func BrandISO5() [4]byte { _ = "STUB: not implemented"; return nil }
+func BrandISO6() [4]byte { _ = "STUB: not implemented"; return nil }
+func BrandISO7() [4]byte { _ = "STUB: not implemented"; return nil }
+func BrandISO8() [4]byte { _ = "STUB: not implemented"; return nil }
+func BrandISO9() [4]byte { _ = "STUB: not implemented"; return nil }
+func BrandAVC1() [4]byte { _ = "STUB: not implemented"; return nil }
+func BrandMP41() [4]byte { _ = "STUB: not implemented"; return nil }
+func BrandMP71() [4]byte { _ = "STUB: not implemented"; return nil }
 
 // Ftyp is ISOBMFF ftyp box type
 type Ftyp struct {
@@ -565,42 +434,22 @@ type CompatibleBrandElem struct {
 	CompatibleBrand [4]byte `mp4:"0,size=8,string"`
 }
 
-func (ftyp *Ftyp) AddCompatibleBrand(cb [4]byte) {
-	if !ftyp.HasCompatibleBrand(cb) {
-		ftyp.CompatibleBrands = append(ftyp.CompatibleBrands, CompatibleBrandElem{
-			CompatibleBrand: cb,
-		})
-	}
-}
+func (ftyp *Ftyp) AddCompatibleBrand(cb [4]byte) { _ = "STUB: not implemented"; return }
 
-func (ftyp *Ftyp) RemoveCompatibleBrand(cb [4]byte) {
-	for i := 0; i < len(ftyp.CompatibleBrands); {
-		if ftyp.CompatibleBrands[i].CompatibleBrand != cb {
-			i++
-			continue
-		}
-		ftyp.CompatibleBrands[i] = ftyp.CompatibleBrands[len(ftyp.CompatibleBrands)-1]
-		ftyp.CompatibleBrands = ftyp.CompatibleBrands[:len(ftyp.CompatibleBrands)-1]
-	}
-}
+func (ftyp *Ftyp) RemoveCompatibleBrand(cb [4]byte) { _ = "STUB: not implemented"; return }
 
-func (ftyp *Ftyp) HasCompatibleBrand(cb [4]byte) bool {
-	for i := range ftyp.CompatibleBrands {
-		if ftyp.CompatibleBrands[i].CompatibleBrand == cb {
-			return true
-		}
-	}
-	return false
-}
+func (ftyp *Ftyp) HasCompatibleBrand(cb [4]byte) bool { _ = "STUB: not implemented"; return false }
 
 // GetType returns the BoxType
 func (*Ftyp) GetType() BoxType {
-	return BoxTypeFtyp()
+	_ = "STUB: not implemented"
+	return
+
+	/*************************** hdlr ****************************/
+	*new(BoxType)
 }
 
-/*************************** hdlr ****************************/
-
-func BoxTypeHdlr() BoxType { return StrToBoxType("hdlr") }
+func BoxTypeHdlr() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 func init() {
 	AddBoxDef(&Hdlr{}, 0)
@@ -619,56 +468,25 @@ type Hdlr struct {
 }
 
 // GetType returns the BoxType
-func (*Hdlr) GetType() BoxType {
-	return BoxTypeHdlr()
-}
+func (*Hdlr) GetType() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 func (hdlr *Hdlr) OnReadField(name string, r bitio.ReadSeeker, leftBits uint64, ctx Context) (rbits uint64, override bool, err error) {
-	switch name {
-	case "Name":
-		return hdlr.OnReadName(r, leftBits, ctx)
-	default:
-		return 0, false, nil
-	}
+	_ = "STUB: not implemented"
+	return 0, false, nil
 }
 
 func (hdlr *Hdlr) OnReadName(r bitio.ReadSeeker, leftBits uint64, ctx Context) (rbits uint64, override bool, err error) {
-	size := leftBits / 8
-	if size == 0 {
-		hdlr.Name = ""
-		return 0, true, nil
-	}
-
-	if !readerHasSize(r, size) {
-		return 0, false, fmt.Errorf("not enough bits")
-	}
-
-	buf := make([]byte, size)
-	if _, err := io.ReadFull(r, buf); err != nil {
-		return 0, false, err
-	}
-
-	plen := buf[0]
-	if hdlr.PreDefined != 0 && size >= 2 && size == uint64(plen+1) {
-		// Pascal-style String
-		hdlr.Name = string(buf[1 : plen+1])
-	} else {
-		// C-style String
-		clen := 0
-		for _, c := range buf {
-			if c == 0x00 {
-				break
-			}
-			clen++
-		}
-		hdlr.Name = string(buf[:clen])
-	}
-	return leftBits, true, nil
+	_ = "STUB: not implemented"
+	return 0, false, nil
 }
+
+// Pascal-style String
+
+// C-style String
 
 /*************************** hvcC ****************************/
 
-func BoxTypeHvcC() BoxType { return StrToBoxType("hvcC") }
+func BoxTypeHvcC() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 func init() {
 	AddBoxDef(&HvcC{})
@@ -681,10 +499,7 @@ type HEVCNalu struct {
 }
 
 func (s HEVCNalu) GetFieldLength(name string, ctx Context) uint {
-	switch name {
-	case "NALUnit":
-		return uint(s.Length)
-	}
+	_ = "STUB: not implemented"
 	return 0
 }
 
@@ -698,10 +513,7 @@ type HEVCNaluArray struct {
 }
 
 func (a HEVCNaluArray) GetFieldLength(name string, ctx Context) uint {
-	switch name {
-	case "Nalus":
-		return uint(a.NumNalus)
-	}
+	_ = "STUB: not implemented"
 	return 0
 }
 
@@ -733,21 +545,13 @@ type HvcC struct {
 	NaluArrays                  []HEVCNaluArray `mp4:"23,len=dynamic"`
 }
 
-func (HvcC) GetType() BoxType {
-	return BoxTypeHvcC()
-}
+func (HvcC) GetType() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
-func (hvcc HvcC) GetFieldLength(name string, ctx Context) uint {
-	switch name {
-	case "NaluArrays":
-		return uint(hvcc.NumOfNaluArrays)
-	}
-	return 0
-}
+func (hvcc HvcC) GetFieldLength(name string, ctx Context) uint { _ = "STUB: not implemented"; return 0 }
 
 /*************************** mdat ****************************/
 
-func BoxTypeMdat() BoxType { return StrToBoxType("mdat") }
+func BoxTypeMdat() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 func init() {
 	AddBoxDef(&Mdat{})
@@ -761,12 +565,14 @@ type Mdat struct {
 
 // GetType returns the BoxType
 func (*Mdat) GetType() BoxType {
-	return BoxTypeMdat()
+	_ = "STUB: not implemented"
+	return
+
+	/*************************** mdhd ****************************/
+	*new(BoxType)
 }
 
-/*************************** mdhd ****************************/
-
-func BoxTypeMdhd() BoxType { return StrToBoxType("mdhd") }
+func BoxTypeMdhd() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 func init() {
 	AddBoxDef(&Mdhd{}, 0, 1)
@@ -789,46 +595,17 @@ type Mdhd struct {
 }
 
 // GetType returns the BoxType
-func (*Mdhd) GetType() BoxType {
-	return BoxTypeMdhd()
-}
+func (*Mdhd) GetType() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
-func (mdhd *Mdhd) GetCreationTime() uint64 {
-	switch mdhd.GetVersion() {
-	case 0:
-		return uint64(mdhd.CreationTimeV0)
-	case 1:
-		return mdhd.CreationTimeV1
-	default:
-		return 0
-	}
-}
+func (mdhd *Mdhd) GetCreationTime() uint64 { _ = "STUB: not implemented"; return 0 }
 
-func (mdhd *Mdhd) GetModificationTime() uint64 {
-	switch mdhd.GetVersion() {
-	case 0:
-		return uint64(mdhd.ModificationTimeV0)
-	case 1:
-		return mdhd.ModificationTimeV1
-	default:
-		return 0
-	}
-}
+func (mdhd *Mdhd) GetModificationTime() uint64 { _ = "STUB: not implemented"; return 0 }
 
-func (mdhd *Mdhd) GetDuration() uint64 {
-	switch mdhd.GetVersion() {
-	case 0:
-		return uint64(mdhd.DurationV0)
-	case 1:
-		return mdhd.DurationV1
-	default:
-		return 0
-	}
-}
+func (mdhd *Mdhd) GetDuration() uint64 { _ = "STUB: not implemented"; return 0 }
 
 /*************************** mdia ****************************/
 
-func BoxTypeMdia() BoxType { return StrToBoxType("mdia") }
+func BoxTypeMdia() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 func init() {
 	AddBoxDef(&Mdia{})
@@ -841,12 +618,14 @@ type Mdia struct {
 
 // GetType returns the BoxType
 func (*Mdia) GetType() BoxType {
-	return BoxTypeMdia()
+	_ = "STUB: not implemented"
+	return
+
+	/*************************** mehd ****************************/
+	*new(BoxType)
 }
 
-/*************************** mehd ****************************/
-
-func BoxTypeMehd() BoxType { return StrToBoxType("mehd") }
+func BoxTypeMehd() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 func init() {
 	AddBoxDef(&Mehd{}, 0, 1)
@@ -860,24 +639,13 @@ type Mehd struct {
 }
 
 // GetType returns the BoxType
-func (*Mehd) GetType() BoxType {
-	return BoxTypeMehd()
-}
+func (*Mehd) GetType() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
-func (mdhd *Mehd) GetFragmentDuration() uint64 {
-	switch mdhd.GetVersion() {
-	case 0:
-		return uint64(mdhd.FragmentDurationV0)
-	case 1:
-		return mdhd.FragmentDurationV1
-	default:
-		return 0
-	}
-}
+func (mdhd *Mehd) GetFragmentDuration() uint64 { _ = "STUB: not implemented"; return 0 }
 
 /*************************** meta ****************************/
 
-func BoxTypeMeta() BoxType { return StrToBoxType("meta") }
+func BoxTypeMeta() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 func init() {
 	AddBoxDef(&Meta{}, 0)
@@ -889,30 +657,17 @@ type Meta struct {
 }
 
 // GetType returns the BoxType
-func (*Meta) GetType() BoxType {
-	return BoxTypeMeta()
-}
+func (*Meta) GetType() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 func (meta *Meta) BeforeUnmarshal(r io.ReadSeeker, size uint64, ctx Context) (n uint64, override bool, err error) {
+	_ = "STUB: not implemented"
 	// for Apple Quick Time
-	buf := make([]byte, 4)
-	if _, err := io.ReadFull(r, buf); err != nil {
-		return 0, false, err
-	}
-	if _, err := r.Seek(-int64(len(buf)), io.SeekCurrent); err != nil {
-		return 0, false, err
-	}
-	if buf[0]|buf[1]|buf[2]|buf[3] != 0x00 {
-		meta.Version = 0
-		meta.Flags = [3]byte{0, 0, 0}
-		return 0, true, nil
-	}
 	return 0, false, nil
 }
 
 /*************************** mfhd ****************************/
 
-func BoxTypeMfhd() BoxType { return StrToBoxType("mfhd") }
+func BoxTypeMfhd() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 func init() {
 	AddBoxDef(&Mfhd{}, 0)
@@ -926,12 +681,14 @@ type Mfhd struct {
 
 // GetType returns the BoxType
 func (*Mfhd) GetType() BoxType {
-	return BoxTypeMfhd()
+	_ = "STUB: not implemented"
+	return
+
+	/*************************** mfra ****************************/
+	*new(BoxType)
 }
 
-/*************************** mfra ****************************/
-
-func BoxTypeMfra() BoxType { return StrToBoxType("mfra") }
+func BoxTypeMfra() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 func init() {
 	AddBoxDef(&Mfra{})
@@ -944,12 +701,14 @@ type Mfra struct {
 
 // GetType returns the BoxType
 func (*Mfra) GetType() BoxType {
-	return BoxTypeMfra()
+	_ = "STUB: not implemented"
+	return
+
+	/*************************** mfro ****************************/
+	*new(BoxType)
 }
 
-/*************************** mfro ****************************/
-
-func BoxTypeMfro() BoxType { return StrToBoxType("mfro") }
+func BoxTypeMfro() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 func init() {
 	AddBoxDef(&Mfro{}, 0)
@@ -963,12 +722,14 @@ type Mfro struct {
 
 // GetType returns the BoxType
 func (*Mfro) GetType() BoxType {
-	return BoxTypeMfro()
+	_ = "STUB: not implemented"
+	return
+
+	/*************************** minf ****************************/
+	*new(BoxType)
 }
 
-/*************************** minf ****************************/
-
-func BoxTypeMinf() BoxType { return StrToBoxType("minf") }
+func BoxTypeMinf() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 func init() {
 	AddBoxDef(&Minf{})
@@ -981,12 +742,14 @@ type Minf struct {
 
 // GetType returns the BoxType
 func (*Minf) GetType() BoxType {
-	return BoxTypeMinf()
+	_ = "STUB: not implemented"
+	return
+
+	/*************************** moof ****************************/
+	*new(BoxType)
 }
 
-/*************************** moof ****************************/
-
-func BoxTypeMoof() BoxType { return StrToBoxType("moof") }
+func BoxTypeMoof() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 func init() {
 	AddBoxDef(&Moof{})
@@ -999,12 +762,14 @@ type Moof struct {
 
 // GetType returns the BoxType
 func (*Moof) GetType() BoxType {
-	return BoxTypeMoof()
+	_ = "STUB: not implemented"
+	return
+
+	/*************************** moov ****************************/
+	*new(BoxType)
 }
 
-/*************************** moov ****************************/
-
-func BoxTypeMoov() BoxType { return StrToBoxType("moov") }
+func BoxTypeMoov() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 func init() {
 	AddBoxDef(&Moov{})
@@ -1017,12 +782,14 @@ type Moov struct {
 
 // GetType returns the BoxType
 func (*Moov) GetType() BoxType {
-	return BoxTypeMoov()
+	_ = "STUB: not implemented"
+	return
+
+	/*************************** mvex ****************************/
+	*new(BoxType)
 }
 
-/*************************** mvex ****************************/
-
-func BoxTypeMvex() BoxType { return StrToBoxType("mvex") }
+func BoxTypeMvex() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 func init() {
 	AddBoxDef(&Mvex{})
@@ -1035,12 +802,14 @@ type Mvex struct {
 
 // GetType returns the BoxType
 func (*Mvex) GetType() BoxType {
-	return BoxTypeMvex()
+	_ = "STUB: not implemented"
+	return
+
+	/*************************** mvhd ****************************/
+	*new(BoxType)
 }
 
-/*************************** mvhd ****************************/
-
-func BoxTypeMvhd() BoxType { return StrToBoxType("mvhd") }
+func BoxTypeMvhd() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 func init() {
 	AddBoxDef(&Mvhd{}, 0, 1)
@@ -1067,65 +836,33 @@ type Mvhd struct {
 
 // GetType returns the BoxType
 func (*Mvhd) GetType() BoxType {
-	return BoxTypeMvhd()
+	_ = "STUB: not implemented"
+	return *
+
+	// StringifyField returns field value as string
+	new(BoxType)
 }
 
-// StringifyField returns field value as string
 func (mvhd *Mvhd) StringifyField(name string, indent string, depth int, ctx Context) (string, bool) {
-	switch name {
-	case "Rate":
-		return util.FormatSignedFixedFloat1616(mvhd.Rate), true
-	default:
-		return "", false
-	}
+	_ = "STUB: not implemented"
+	return "", false
 }
 
-func (mvhd *Mvhd) GetCreationTime() uint64 {
-	switch mvhd.GetVersion() {
-	case 0:
-		return uint64(mvhd.CreationTimeV0)
-	case 1:
-		return mvhd.CreationTimeV1
-	default:
-		return 0
-	}
-}
+func (mvhd *Mvhd) GetCreationTime() uint64 { _ = "STUB: not implemented"; return 0 }
 
-func (mvhd *Mvhd) GetModificationTime() uint64 {
-	switch mvhd.GetVersion() {
-	case 0:
-		return uint64(mvhd.ModificationTimeV0)
-	case 1:
-		return mvhd.ModificationTimeV1
-	default:
-		return 0
-	}
-}
+func (mvhd *Mvhd) GetModificationTime() uint64 { _ = "STUB: not implemented"; return 0 }
 
-func (mvhd *Mvhd) GetDuration() uint64 {
-	switch mvhd.GetVersion() {
-	case 0:
-		return uint64(mvhd.DurationV0)
-	case 1:
-		return mvhd.DurationV1
-	default:
-		return 0
-	}
-}
+func (mvhd *Mvhd) GetDuration() uint64 { _ = "STUB: not implemented"; return 0 }
 
 // GetRate returns value of rate as float64
-func (mvhd *Mvhd) GetRate() float64 {
-	return float64(mvhd.Rate) / (1 << 16)
-}
+func (mvhd *Mvhd) GetRate() float64 { _ = "STUB: not implemented"; return 0 }
 
 // GetRateInt returns value of rate as int16
-func (mvhd *Mvhd) GetRateInt() int16 {
-	return int16(mvhd.Rate >> 16)
-}
+func (mvhd *Mvhd) GetRateInt() int16 { _ = "STUB: not implemented"; return 0 }
 
 /*************************** saio ****************************/
 
-func BoxTypeSaio() BoxType { return StrToBoxType("saio") }
+func BoxTypeSaio() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 func init() {
 	AddBoxDef(&Saio{}, 0, 1)
@@ -1141,31 +878,17 @@ type Saio struct {
 }
 
 func (saio *Saio) GetFieldLength(name string, ctx Context) uint {
-	switch name {
-	case "OffsetV0", "OffsetV1":
-		return uint(saio.EntryCount)
-	}
-	panic(fmt.Errorf("invalid name of dynamic-length field: boxType=saio fieldName=%s", name))
+	_ = "STUB: not implemented"
+	return 0
 }
 
-func (*Saio) GetType() BoxType {
-	return BoxTypeSaio()
-}
+func (*Saio) GetType() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
-func (saio *Saio) GetOffset(index int) uint64 {
-	switch saio.GetVersion() {
-	case 0:
-		return uint64(saio.OffsetV0[index])
-	case 1:
-		return saio.OffsetV1[index]
-	default:
-		return 0
-	}
-}
+func (saio *Saio) GetOffset(index int) uint64 { _ = "STUB: not implemented"; return 0 }
 
 /*************************** saiz ****************************/
 
-func BoxTypeSaiz() BoxType { return StrToBoxType("saiz") }
+func BoxTypeSaiz() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 func init() {
 	AddBoxDef(&Saiz{}, 0)
@@ -1181,38 +904,34 @@ type Saiz struct {
 }
 
 func (saiz *Saiz) IsOptFieldEnabled(name string, ctx Context) bool {
-	switch name {
-	case "SampleInfoSize":
-		return saiz.DefaultSampleInfoSize == 0
-	}
+	_ = "STUB: not implemented"
 	return false
 }
 
 func (saiz *Saiz) GetFieldLength(name string, ctx Context) uint {
-	switch name {
-	case "SampleInfoSize":
-		return uint(saiz.SampleCount)
-	}
-	panic(fmt.Errorf("invalid name of dynamic-length field: boxType=saiz fieldName=%s", name))
+	_ = "STUB: not implemented"
+	return 0
 }
 
 func (*Saiz) GetType() BoxType {
-	return BoxTypeSaiz()
+	_ = "STUB: not implemented"
+	return
+
+	/*********************** SampleEntry *************************/
+	*new(BoxType)
 }
 
-/*********************** SampleEntry *************************/
-
-func BoxTypeMp4v() BoxType { return StrToBoxType("mp4v") }
-func BoxTypeAvc1() BoxType { return StrToBoxType("avc1") }
-func BoxTypeEncv() BoxType { return StrToBoxType("encv") }
-func BoxTypeHev1() BoxType { return StrToBoxType("hev1") }
-func BoxTypeHvc1() BoxType { return StrToBoxType("hvc1") }
-func BoxTypeMp4a() BoxType { return StrToBoxType("mp4a") }
-func BoxTypeEnca() BoxType { return StrToBoxType("enca") }
-func BoxTypeAvcC() BoxType { return StrToBoxType("avcC") }
-func BoxTypePasp() BoxType { return StrToBoxType("pasp") }
-func BoxTypeStpp() BoxType { return StrToBoxType("stpp") }
-func BoxTypeSbtt() BoxType { return StrToBoxType("sbtt") }
+func BoxTypeMp4v() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
+func BoxTypeAvc1() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
+func BoxTypeEncv() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
+func BoxTypeHev1() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
+func BoxTypeHvc1() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
+func BoxTypeMp4a() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
+func BoxTypeEnca() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
+func BoxTypeAvcC() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
+func BoxTypePasp() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
+func BoxTypeStpp() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
+func BoxTypeSbtt() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 func init() {
 	AddAnyTypeBoxDef(&VisualSampleEntry{}, BoxTypeMp4v())
@@ -1252,15 +971,8 @@ type VisualSampleEntry struct {
 
 // StringifyField returns field value as string
 func (vse *VisualSampleEntry) StringifyField(name string, indent string, depth int, ctx Context) (string, bool) {
-	switch name {
-	case "Compressorname":
-		if vse.Compressorname[0] <= 31 {
-			return `"` + util.EscapeUnprintables(string(vse.Compressorname[1:vse.Compressorname[0]+1])) + `"`, true
-		}
-		return "", false
-	default:
-		return "", false
-	}
+	_ = "STUB: not implemented"
+	return "", false
 }
 
 type AudioSampleEntry struct {
@@ -1276,45 +988,24 @@ type AudioSampleEntry struct {
 }
 
 func (ase *AudioSampleEntry) IsOptFieldEnabled(name string, ctx Context) bool {
-	if name == "QuickTimeData" {
-		return ctx.IsQuickTimeCompatible && (ctx.UnderWave || ase.EntryVersion == 1 || ase.EntryVersion == 2)
-	}
-	if ctx.IsQuickTimeCompatible && ctx.UnderWave {
-		return false
-	}
-	return true
+	_ = "STUB: not implemented"
+	return false
 }
 
 func (ase *AudioSampleEntry) GetFieldLength(name string, ctx Context) uint {
-	if name == "QuickTimeData" && ctx.IsQuickTimeCompatible {
-		if ctx.UnderWave {
-			return LengthUnlimited
-		} else if ase.EntryVersion == 1 {
-			return 16
-		} else if ase.EntryVersion == 2 {
-			return 36
-		}
-	}
+	_ = "STUB: not implemented"
 	return 0
 }
 
 // StringifyField returns field value as string
 func (ase *AudioSampleEntry) StringifyField(name string, indent string, depth int, ctx Context) (string, bool) {
-	switch name {
-	case "SampleRate":
-		return util.FormatUnsignedFixedFloat1616(ase.SampleRate), true
-	default:
-		return "", false
-	}
+	_ = "STUB: not implemented"
+	return "", false
 }
 
-func (ase *AudioSampleEntry) GetSampleRate() float64 {
-	return float64(ase.SampleRate) / (1 << 16)
-}
+func (ase *AudioSampleEntry) GetSampleRate() float64 { _ = "STUB: not implemented"; return 0 }
 
-func (ase *AudioSampleEntry) GetSampleRateInt() uint16 {
-	return uint16(ase.SampleRate >> 16)
-}
+func (ase *AudioSampleEntry) GetSampleRateInt() uint16 { _ = "STUB: not implemented"; return 0 }
 
 const (
 	AVCBaselineProfile uint8 = 66  // 0x42
@@ -1350,55 +1041,22 @@ type AVCDecoderConfiguration struct {
 }
 
 func (avcc *AVCDecoderConfiguration) GetFieldLength(name string, ctx Context) uint {
-	switch name {
-	case "SequenceParameterSets":
-		return uint(avcc.NumOfSequenceParameterSets)
-	case "PictureParameterSets":
-		return uint(avcc.NumOfPictureParameterSets)
-	case "SequenceParameterSetsExt":
-		return uint(avcc.NumOfSequenceParameterSetExt)
-	}
+	_ = "STUB: not implemented"
 	return 0
 }
 
 func (avcc *AVCDecoderConfiguration) IsOptFieldEnabled(name string, ctx Context) bool {
-	switch name {
-	case "Reserved3",
-		"ChromaFormat",
-		"Reserved4",
-		"BitDepthLumaMinus8",
-		"Reserved5",
-		"BitDepthChromaMinus8",
-		"NumOfSequenceParameterSetExt",
-		"SequenceParameterSetsExt":
-		return avcc.HighProfileFieldsEnabled
-	}
+	_ = "STUB: not implemented"
 	return false
 }
 
 func (avcc *AVCDecoderConfiguration) OnReadField(name string, r bitio.ReadSeeker, leftBits uint64, ctx Context) (rbits uint64, override bool, err error) {
-	if name == "HighProfileFieldsEnabled" {
-		avcc.HighProfileFieldsEnabled = leftBits >= 32 &&
-			(avcc.Profile == AVCHighProfile ||
-				avcc.Profile == AVCHigh10Profile ||
-				avcc.Profile == AVCHigh422Profile ||
-				avcc.Profile == 144)
-		return 0, true, nil
-	}
+	_ = "STUB: not implemented"
 	return 0, false, nil
 }
 
 func (avcc *AVCDecoderConfiguration) OnWriteField(name string, w bitio.Writer, ctx Context) (wbits uint64, override bool, err error) {
-	if name == "HighProfileFieldsEnabled" {
-		if avcc.HighProfileFieldsEnabled &&
-			avcc.Profile != AVCHighProfile &&
-			avcc.Profile != AVCHigh10Profile &&
-			avcc.Profile != AVCHigh422Profile &&
-			avcc.Profile != 144 {
-			return 0, false, errors.New("each values of Profile and HighProfileFieldsEnabled are inconsistent")
-		}
-		return 0, true, nil
-	}
+	_ = "STUB: not implemented"
 	return 0, false, nil
 }
 
@@ -1409,10 +1067,7 @@ type AVCParameterSet struct {
 }
 
 func (s *AVCParameterSet) GetFieldLength(name string, ctx Context) uint {
-	switch name {
-	case "NALUnit":
-		return uint(s.Length)
-	}
+	_ = "STUB: not implemented"
 	return 0
 }
 
@@ -1430,15 +1085,18 @@ type XMLSubtitleSampleEntry struct {
 }
 
 func (xse *XMLSubtitleSampleEntry) GetNamespaceList() []string {
-	return strings.Fields(xse.Namespace)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func (xse *XMLSubtitleSampleEntry) GetSchemaLocationList() []string {
-	return strings.Fields(xse.SchemaLocation)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func (xse *XMLSubtitleSampleEntry) GetAuxiliaryMIMETypesList() []string {
-	return strings.Fields(xse.AuxiliaryMIMETypes)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 type TextSubtitleSampleEntry struct {
@@ -1449,7 +1107,7 @@ type TextSubtitleSampleEntry struct {
 
 /*************************** sbgp ****************************/
 
-func BoxTypeSbgp() BoxType { return StrToBoxType("sbgp") }
+func BoxTypeSbgp() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 func init() {
 	AddBoxDef(&Sbgp{}, 0, 1)
@@ -1469,20 +1127,19 @@ type SbgpEntry struct {
 }
 
 func (sbgp *Sbgp) GetFieldLength(name string, ctx Context) uint {
-	switch name {
-	case "Entries":
-		return uint(sbgp.EntryCount)
-	}
-	panic(fmt.Errorf("invalid name of dynamic-length field: boxType=sbgp fieldName=%s", name))
+	_ = "STUB: not implemented"
+	return 0
 }
 
 func (*Sbgp) GetType() BoxType {
-	return BoxTypeSbgp()
+	_ = "STUB: not implemented"
+	return
+
+	/*************************** schi ****************************/
+	*new(BoxType)
 }
 
-/*************************** schi ****************************/
-
-func BoxTypeSchi() BoxType { return StrToBoxType("schi") }
+func BoxTypeSchi() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 func init() {
 	AddBoxDef(&Schi{})
@@ -1493,12 +1150,14 @@ type Schi struct {
 }
 
 func (*Schi) GetType() BoxType {
-	return BoxTypeSchi()
+	_ = "STUB: not implemented"
+	return
+
+	/*************************** schm ****************************/
+	*new(BoxType)
 }
 
-/*************************** schm ****************************/
-
-func BoxTypeSchm() BoxType { return StrToBoxType("schm") }
+func BoxTypeSchm() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 func init() {
 	AddBoxDef(&Schm{}, 0)
@@ -1512,12 +1171,14 @@ type Schm struct {
 }
 
 func (*Schm) GetType() BoxType {
-	return BoxTypeSchm()
+	_ = "STUB: not implemented"
+	return
+
+	/*************************** sdtp ****************************/
+	*new(BoxType)
 }
 
-/*************************** sdtp ****************************/
-
-func BoxTypeSdtp() BoxType { return StrToBoxType("sdtp") }
+func BoxTypeSdtp() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 func init() {
 	AddBoxDef(&Sdtp{}, 0)
@@ -1536,12 +1197,14 @@ type SdtpSampleElem struct {
 }
 
 func (*Sdtp) GetType() BoxType {
-	return BoxTypeSdtp()
+	_ = "STUB: not implemented"
+	return
+
+	/*************************** sgpd ****************************/
+	*new(BoxType)
 }
 
-/*************************** sgpd ****************************/
-
-func BoxTypeSgpd() BoxType { return StrToBoxType("sgpd") }
+func BoxTypeSgpd() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 func init() {
 	AddBoxDef(&Sgpd{}, 1, 2) // version 0 is deprecated by ISO/IEC 14496-12
@@ -1607,82 +1270,33 @@ type TemporalLevelEntryL struct {
 	TemporalLevelEntry `mp4:"1,extend"`
 }
 
-func (sgpd *Sgpd) GetFieldSize(name string, ctx Context) uint {
-	switch name {
-	case "AlternativeStartupEntries":
-		return uint(sgpd.DefaultLength * 8)
-	}
-	return 0
-}
+func (sgpd *Sgpd) GetFieldSize(name string, ctx Context) uint { _ = "STUB: not implemented"; return 0 }
 
 func (sgpd *Sgpd) GetFieldLength(name string, ctx Context) uint {
-	switch name {
-	case "RollDistances", "RollDistancesL",
-		"AlternativeStartupEntries", "AlternativeStartupEntriesL",
-		"VisualRandomAccessEntries", "VisualRandomAccessEntriesL",
-		"TemporalLevelEntries", "TemporalLevelEntriesL":
-		return uint(sgpd.EntryCount)
-	}
+	_ = "STUB: not implemented"
 	return 0
 }
 
 func (sgpd *Sgpd) IsOptFieldEnabled(name string, ctx Context) bool {
-	noDefaultLength := sgpd.Version == 1 && sgpd.DefaultLength == 0
-	rollDistances := sgpd.GroupingType == [4]byte{'r', 'o', 'l', 'l'} ||
-		sgpd.GroupingType == [4]byte{'p', 'r', 'o', 'l'}
-	alternativeStartupEntries := sgpd.GroupingType == [4]byte{'a', 'l', 's', 't'}
-	visualRandomAccessEntries := sgpd.GroupingType == [4]byte{'r', 'a', 'p', ' '}
-	temporalLevelEntries := sgpd.GroupingType == [4]byte{'t', 'e', 'l', 'e'}
-	switch name {
-	case "RollDistances":
-		return rollDistances && !noDefaultLength
-	case "RollDistancesL":
-		return rollDistances && noDefaultLength
-	case "AlternativeStartupEntries":
-		return alternativeStartupEntries && !noDefaultLength
-	case "AlternativeStartupEntriesL":
-		return alternativeStartupEntries && noDefaultLength
-	case "VisualRandomAccessEntries":
-		return visualRandomAccessEntries && !noDefaultLength
-	case "VisualRandomAccessEntriesL":
-		return visualRandomAccessEntries && noDefaultLength
-	case "TemporalLevelEntries":
-		return temporalLevelEntries && !noDefaultLength
-	case "TemporalLevelEntriesL":
-		return temporalLevelEntries && noDefaultLength
-	case "Unsupported":
-		return !rollDistances &&
-			!alternativeStartupEntries &&
-			!visualRandomAccessEntries &&
-			!temporalLevelEntries
-	default:
-		return false
-	}
+	_ = "STUB: not implemented"
+	return false
 }
 
-func (*Sgpd) GetType() BoxType {
-	return BoxTypeSgpd()
-}
+func (*Sgpd) GetType() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 func (entry *AlternativeStartupEntry) GetFieldLength(name string, ctx Context) uint {
-	switch name {
-	case "SampleOffset":
-		return uint(entry.RollCount)
-	}
+	_ = "STUB: not implemented"
 	return 0
 }
 
 func (entry *AlternativeStartupEntryL) GetFieldSize(name string, ctx Context) uint {
-	switch name {
-	case "AlternativeStartupEntry":
-		return uint(entry.DescriptionLength * 8)
-	}
+	_ = "STUB: not implemented"
 	return 0
 }
 
 /*************************** sidx ****************************/
 
-func BoxTypeSidx() BoxType { return StrToBoxType("sidx") }
+func BoxTypeSidx() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 func init() {
 	AddBoxDef(&Sidx{}, 0, 1)
@@ -1710,43 +1324,20 @@ type SidxReference struct {
 	SAPDeltaTime       uint32 `mp4:"5,size=28"`
 }
 
-func (*Sidx) GetType() BoxType {
-	return BoxTypeSidx()
-}
+func (*Sidx) GetType() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 func (sidx *Sidx) GetFieldLength(name string, ctx Context) uint {
-	switch name {
-	case "References":
-		return uint(sidx.ReferenceCount)
-	}
-	panic(fmt.Errorf("invalid name of dynamic-length field: boxType=sidx fieldName=%s", name))
+	_ = "STUB: not implemented"
+	return 0
 }
 
-func (sidx *Sidx) GetEarliestPresentationTime() uint64 {
-	switch sidx.GetVersion() {
-	case 0:
-		return uint64(sidx.EarliestPresentationTimeV0)
-	case 1:
-		return sidx.EarliestPresentationTimeV1
-	default:
-		return 0
-	}
-}
+func (sidx *Sidx) GetEarliestPresentationTime() uint64 { _ = "STUB: not implemented"; return 0 }
 
-func (sidx *Sidx) GetFirstOffset() uint64 {
-	switch sidx.GetVersion() {
-	case 0:
-		return uint64(sidx.FirstOffsetV0)
-	case 1:
-		return sidx.FirstOffsetV1
-	default:
-		return 0
-	}
-}
+func (sidx *Sidx) GetFirstOffset() uint64 { _ = "STUB: not implemented"; return 0 }
 
 /*************************** sinf ****************************/
 
-func BoxTypeSinf() BoxType { return StrToBoxType("sinf") }
+func BoxTypeSinf() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 func init() {
 	AddBoxDef(&Sinf{})
@@ -1757,12 +1348,14 @@ type Sinf struct {
 }
 
 func (*Sinf) GetType() BoxType {
-	return BoxTypeSinf()
+	_ = "STUB: not implemented"
+	return
+
+	/*************************** smhd ****************************/
+	*new(BoxType)
 }
 
-/*************************** smhd ****************************/
-
-func BoxTypeSmhd() BoxType { return StrToBoxType("smhd") }
+func BoxTypeSmhd() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 func init() {
 	AddBoxDef(&Smhd{}, 0)
@@ -1775,32 +1368,27 @@ type Smhd struct {
 }
 
 func (*Smhd) GetType() BoxType {
-	return BoxTypeSmhd()
+	_ = "STUB: not implemented"
+	return *
+
+	// StringifyField returns field value as string
+	new(BoxType)
 }
 
-// StringifyField returns field value as string
 func (smhd *Smhd) StringifyField(name string, indent string, depth int, ctx Context) (string, bool) {
-	switch name {
-	case "Balance":
-		return util.FormatSignedFixedFloat88(smhd.Balance), true
-	default:
-		return "", false
-	}
+	_ = "STUB: not implemented"
+	return "", false
 }
 
 // GetBalance returns value of width as float32
-func (smhd *Smhd) GetBalance() float32 {
-	return float32(smhd.Balance) / (1 << 8)
-}
+func (smhd *Smhd) GetBalance() float32 { _ = "STUB: not implemented"; return 0 }
 
 // GetBalanceInt returns value of width as int8
-func (smhd *Smhd) GetBalanceInt() int8 {
-	return int8(smhd.Balance >> 8)
-}
+func (smhd *Smhd) GetBalanceInt() int8 { _ = "STUB: not implemented"; return 0 }
 
 /*************************** stbl ****************************/
 
-func BoxTypeStbl() BoxType { return StrToBoxType("stbl") }
+func BoxTypeStbl() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 func init() {
 	AddBoxDef(&Stbl{})
@@ -1813,12 +1401,14 @@ type Stbl struct {
 
 // GetType returns the BoxType
 func (*Stbl) GetType() BoxType {
-	return BoxTypeStbl()
+	_ = "STUB: not implemented"
+	return
+
+	/*************************** stco ****************************/
+	*new(BoxType)
 }
 
-/*************************** stco ****************************/
-
-func BoxTypeStco() BoxType { return StrToBoxType("stco") }
+func BoxTypeStco() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 func init() {
 	AddBoxDef(&Stco{}, 0)
@@ -1833,21 +1423,21 @@ type Stco struct {
 
 // GetType returns the BoxType
 func (*Stco) GetType() BoxType {
-	return BoxTypeStco()
+	_ = "STUB: not implemented"
+	return *
+
+	// GetFieldLength returns length of dynamic field
+	new(BoxType)
 }
 
-// GetFieldLength returns length of dynamic field
 func (stco *Stco) GetFieldLength(name string, ctx Context) uint {
-	switch name {
-	case "ChunkOffset":
-		return uint(stco.EntryCount)
-	}
-	panic(fmt.Errorf("invalid name of dynamic-length field: boxType=stco fieldName=%s", name))
+	_ = "STUB: not implemented"
+	return 0
 }
 
 /*************************** stsc ****************************/
 
-func BoxTypeStsc() BoxType { return StrToBoxType("stsc") }
+func BoxTypeStsc() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 func init() {
 	AddBoxDef(&Stsc{}, 0)
@@ -1868,21 +1458,21 @@ type StscEntry struct {
 
 // GetType returns the BoxType
 func (*Stsc) GetType() BoxType {
-	return BoxTypeStsc()
+	_ = "STUB: not implemented"
+	return *
+
+	// GetFieldLength returns length of dynamic field
+	new(BoxType)
 }
 
-// GetFieldLength returns length of dynamic field
 func (stsc *Stsc) GetFieldLength(name string, ctx Context) uint {
-	switch name {
-	case "Entries":
-		return uint(stsc.EntryCount)
-	}
-	panic(fmt.Errorf("invalid name of dynamic-length field: boxType=stsc fieldName=%s", name))
+	_ = "STUB: not implemented"
+	return 0
 }
 
 /*************************** stsd ****************************/
 
-func BoxTypeStsd() BoxType { return StrToBoxType("stsd") }
+func BoxTypeStsd() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 func init() {
 	AddBoxDef(&Stsd{}, 0)
@@ -1896,12 +1486,14 @@ type Stsd struct {
 
 // GetType returns the BoxType
 func (*Stsd) GetType() BoxType {
-	return BoxTypeStsd()
+	_ = "STUB: not implemented"
+	return
+
+	/*************************** stss ****************************/
+	*new(BoxType)
 }
 
-/*************************** stss ****************************/
-
-func BoxTypeStss() BoxType { return StrToBoxType("stss") }
+func BoxTypeStss() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 func init() {
 	AddBoxDef(&Stss{}, 0)
@@ -1915,21 +1507,21 @@ type Stss struct {
 
 // GetType returns the BoxType
 func (*Stss) GetType() BoxType {
-	return BoxTypeStss()
+	_ = "STUB: not implemented"
+	return *
+
+	// GetFieldLength returns length of dynamic field
+	new(BoxType)
 }
 
-// GetFieldLength returns length of dynamic field
 func (stss *Stss) GetFieldLength(name string, ctx Context) uint {
-	switch name {
-	case "SampleNumber":
-		return uint(stss.EntryCount)
-	}
-	panic(fmt.Errorf("invalid name of dynamic-length field: boxType=stss fieldName=%s", name))
+	_ = "STUB: not implemented"
+	return 0
 }
 
 /*************************** stsz ****************************/
 
-func BoxTypeStsz() BoxType { return StrToBoxType("stsz") }
+func BoxTypeStsz() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 func init() {
 	AddBoxDef(&Stsz{}, 0)
@@ -1945,24 +1537,21 @@ type Stsz struct {
 
 // GetType returns the BoxType
 func (*Stsz) GetType() BoxType {
-	return BoxTypeStsz()
+	_ = "STUB: not implemented"
+	return *
+
+	// GetFieldLength returns length of dynamic field
+	new(BoxType)
 }
 
-// GetFieldLength returns length of dynamic field
 func (stsz *Stsz) GetFieldLength(name string, ctx Context) uint {
-	switch name {
-	case "EntrySize":
-		if stsz.SampleSize == 0 {
-			return uint(stsz.SampleCount)
-		}
-		return 0
-	}
-	panic(fmt.Errorf("invalid name of dynamic-length field: boxType=stsz fieldName=%s", name))
+	_ = "STUB: not implemented"
+	return 0
 }
 
 /*************************** stts ****************************/
 
-func BoxTypeStts() BoxType { return StrToBoxType("stts") }
+func BoxTypeStts() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 func init() {
 	AddBoxDef(&Stts{}, 0)
@@ -1982,21 +1571,21 @@ type SttsEntry struct {
 
 // GetType returns the BoxType
 func (*Stts) GetType() BoxType {
-	return BoxTypeStts()
+	_ = "STUB: not implemented"
+	return *
+
+	// GetFieldLength returns length of dynamic field
+	new(BoxType)
 }
 
-// GetFieldLength returns length of dynamic field
 func (stts *Stts) GetFieldLength(name string, ctx Context) uint {
-	switch name {
-	case "Entries":
-		return uint(stts.EntryCount)
-	}
-	panic(fmt.Errorf("invalid name of dynamic-length field: boxType=stts fieldName=%s", name))
+	_ = "STUB: not implemented"
+	return 0
 }
 
 /*************************** styp ****************************/
 
-func BoxTypeStyp() BoxType { return StrToBoxType("styp") }
+func BoxTypeStyp() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 func init() {
 	AddBoxDef(&Styp{})
@@ -2010,12 +1599,14 @@ type Styp struct {
 }
 
 func (*Styp) GetType() BoxType {
-	return BoxTypeStyp()
+	_ = "STUB: not implemented"
+	return
+
+	/*************************** tfdt ****************************/
+	*new(BoxType)
 }
 
-/*************************** tfdt ****************************/
-
-func BoxTypeTfdt() BoxType { return StrToBoxType("tfdt") }
+func BoxTypeTfdt() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 func init() {
 	AddBoxDef(&Tfdt{}, 0, 1)
@@ -2029,24 +1620,13 @@ type Tfdt struct {
 }
 
 // GetType returns the BoxType
-func (*Tfdt) GetType() BoxType {
-	return BoxTypeTfdt()
-}
+func (*Tfdt) GetType() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
-func (tfdt *Tfdt) GetBaseMediaDecodeTime() uint64 {
-	switch tfdt.GetVersion() {
-	case 0:
-		return uint64(tfdt.BaseMediaDecodeTimeV0)
-	case 1:
-		return tfdt.BaseMediaDecodeTimeV1
-	default:
-		return 0
-	}
-}
+func (tfdt *Tfdt) GetBaseMediaDecodeTime() uint64 { _ = "STUB: not implemented"; return 0 }
 
 /*************************** tfhd ****************************/
 
-func BoxTypeTfhd() BoxType { return StrToBoxType("tfhd") }
+func BoxTypeTfhd() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 func init() {
 	AddBoxDef(&Tfhd{}, 0)
@@ -2077,12 +1657,14 @@ const (
 
 // GetType returns the BoxType
 func (*Tfhd) GetType() BoxType {
-	return BoxTypeTfhd()
+	_ = "STUB: not implemented"
+	return
+
+	/*************************** tfra ****************************/
+	*new(BoxType)
 }
 
-/*************************** tfra ****************************/
-
-func BoxTypeTfra() BoxType { return StrToBoxType("tfra") }
+func BoxTypeTfra() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 func init() {
 	AddBoxDef(&Tfra{}, 0, 1)
@@ -2112,73 +1694,40 @@ type TfraEntry struct {
 
 // GetType returns the BoxType
 func (*Tfra) GetType() BoxType {
-	return BoxTypeTfra()
+	_ = "STUB: not implemented"
+	return *
+
+	// GetFieldSize returns size of dynamic field
+	new(BoxType)
 }
 
-// GetFieldSize returns size of dynamic field
-func (tfra *Tfra) GetFieldSize(name string, ctx Context) uint {
-	switch name {
-	case "TrafNumber":
-		return (uint(tfra.LengthSizeOfTrafNum) + 1) * 8
-	case "TrunNumber":
-		return (uint(tfra.LengthSizeOfTrunNum) + 1) * 8
-	case "SampleNumber":
-		return (uint(tfra.LengthSizeOfSampleNum) + 1) * 8
-	case "Entries":
-		switch tfra.GetVersion() {
-		case 0:
-			return 0 +
-				/* TimeV0       */ 32 +
-				/* MoofOffsetV0 */ 32 +
-				/* TrafNumber   */ (uint(tfra.LengthSizeOfTrafNum)+1)*8 +
-				/* TrunNumber   */ (uint(tfra.LengthSizeOfTrunNum)+1)*8 +
-				/* SampleNumber */ (uint(tfra.LengthSizeOfSampleNum)+1)*8
-		case 1:
-			return 0 +
-				/* TimeV1       */ 64 +
-				/* MoofOffsetV1 */ 64 +
-				/* TrafNumber   */ (uint(tfra.LengthSizeOfTrafNum)+1)*8 +
-				/* TrunNumber   */ (uint(tfra.LengthSizeOfTrunNum)+1)*8 +
-				/* SampleNumber */ (uint(tfra.LengthSizeOfSampleNum)+1)*8
-		}
-	}
-	panic(fmt.Errorf("invalid name of dynamic-size field: boxType=tfra fieldName=%s", name))
-}
+func (tfra *Tfra) GetFieldSize(name string, ctx Context) uint { _ = "STUB: not implemented"; return 0 }
+
+/* TimeV0       */
+/* MoofOffsetV0 */
+/* TrafNumber   */
+/* TrunNumber   */
+/* SampleNumber */
+
+/* TimeV1       */
+/* MoofOffsetV1 */
+/* TrafNumber   */
+/* TrunNumber   */
+/* SampleNumber */
 
 // GetFieldLength returns length of dynamic field
 func (tfra *Tfra) GetFieldLength(name string, ctx Context) uint {
-	switch name {
-	case "Entries":
-		return uint(tfra.NumberOfEntry)
-	}
-	panic(fmt.Errorf("invalid name of dynamic-length field: boxType=tfra fieldName=%s", name))
+	_ = "STUB: not implemented"
+	return 0
 }
 
-func (tfra *Tfra) GetTime(index int) uint64 {
-	switch tfra.GetVersion() {
-	case 0:
-		return uint64(tfra.Entries[index].TimeV0)
-	case 1:
-		return tfra.Entries[index].TimeV1
-	default:
-		return 0
-	}
-}
+func (tfra *Tfra) GetTime(index int) uint64 { _ = "STUB: not implemented"; return 0 }
 
-func (tfra *Tfra) GetMoofOffset(index int) uint64 {
-	switch tfra.GetVersion() {
-	case 0:
-		return uint64(tfra.Entries[index].MoofOffsetV0)
-	case 1:
-		return tfra.Entries[index].MoofOffsetV1
-	default:
-		return 0
-	}
-}
+func (tfra *Tfra) GetMoofOffset(index int) uint64 { _ = "STUB: not implemented"; return 0 }
 
 /*************************** tkhd ****************************/
 
-func BoxTypeTkhd() BoxType { return StrToBoxType("tkhd") }
+func BoxTypeTkhd() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 func init() {
 	AddBoxDef(&Tkhd{}, 0, 1)
@@ -2208,77 +1757,39 @@ type Tkhd struct {
 
 // GetType returns the BoxType
 func (*Tkhd) GetType() BoxType {
-	return BoxTypeTkhd()
+	_ = "STUB: not implemented"
+	return *
+
+	// StringifyField returns field value as string
+	new(BoxType)
 }
 
-// StringifyField returns field value as string
 func (tkhd *Tkhd) StringifyField(name string, indent string, depth int, ctx Context) (string, bool) {
-	switch name {
-	case "Width":
-		return util.FormatUnsignedFixedFloat1616(tkhd.Width), true
-	case "Height":
-		return util.FormatUnsignedFixedFloat1616(tkhd.Height), true
-	default:
-		return "", false
-	}
+	_ = "STUB: not implemented"
+	return "", false
 }
 
-func (tkhd *Tkhd) GetCreationTime() uint64 {
-	switch tkhd.GetVersion() {
-	case 0:
-		return uint64(tkhd.CreationTimeV0)
-	case 1:
-		return tkhd.CreationTimeV1
-	default:
-		return 0
-	}
-}
+func (tkhd *Tkhd) GetCreationTime() uint64 { _ = "STUB: not implemented"; return 0 }
 
-func (tkhd *Tkhd) GetModificationTime() uint64 {
-	switch tkhd.GetVersion() {
-	case 0:
-		return uint64(tkhd.ModificationTimeV0)
-	case 1:
-		return tkhd.ModificationTimeV1
-	default:
-		return 0
-	}
-}
+func (tkhd *Tkhd) GetModificationTime() uint64 { _ = "STUB: not implemented"; return 0 }
 
-func (tkhd *Tkhd) GetDuration() uint64 {
-	switch tkhd.GetVersion() {
-	case 0:
-		return uint64(tkhd.DurationV0)
-	case 1:
-		return tkhd.DurationV1
-	default:
-		return 0
-	}
-}
+func (tkhd *Tkhd) GetDuration() uint64 { _ = "STUB: not implemented"; return 0 }
 
 // GetWidth returns value of width as float64
-func (tkhd *Tkhd) GetWidth() float64 {
-	return float64(tkhd.Width) / (1 << 16)
-}
+func (tkhd *Tkhd) GetWidth() float64 { _ = "STUB: not implemented"; return 0 }
 
 // GetWidthInt returns value of width as uint16
-func (tkhd *Tkhd) GetWidthInt() uint16 {
-	return uint16(tkhd.Width >> 16)
-}
+func (tkhd *Tkhd) GetWidthInt() uint16 { _ = "STUB: not implemented"; return 0 }
 
 // GetHeight returns value of height as float64
-func (tkhd *Tkhd) GetHeight() float64 {
-	return float64(tkhd.Height) / (1 << 16)
-}
+func (tkhd *Tkhd) GetHeight() float64 { _ = "STUB: not implemented"; return 0 }
 
 // GetHeightInt returns value of height as uint16
-func (tkhd *Tkhd) GetHeightInt() uint16 {
-	return uint16(tkhd.Height >> 16)
-}
+func (tkhd *Tkhd) GetHeightInt() uint16 { _ = "STUB: not implemented"; return 0 }
 
 /*************************** traf ****************************/
 
-func BoxTypeTraf() BoxType { return StrToBoxType("traf") }
+func BoxTypeTraf() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 func init() {
 	AddBoxDef(&Traf{})
@@ -2291,12 +1802,14 @@ type Traf struct {
 
 // GetType returns the BoxType
 func (*Traf) GetType() BoxType {
-	return BoxTypeTraf()
+	_ = "STUB: not implemented"
+	return
+
+	/*************************** trak ****************************/
+	*new(BoxType)
 }
 
-/*************************** trak ****************************/
-
-func BoxTypeTrak() BoxType { return StrToBoxType("trak") }
+func BoxTypeTrak() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 func init() {
 	AddBoxDef(&Trak{})
@@ -2309,12 +1822,14 @@ type Trak struct {
 
 // GetType returns the BoxType
 func (*Trak) GetType() BoxType {
-	return BoxTypeTrak()
+	_ = "STUB: not implemented"
+	return
+
+	/*************************** trep ****************************/
+	*new(BoxType)
 }
 
-/*************************** trep ****************************/
-
-func BoxTypeTrep() BoxType { return StrToBoxType("trep") }
+func BoxTypeTrep() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 func init() {
 	AddBoxDef(&Trep{}, 0)
@@ -2328,12 +1843,14 @@ type Trep struct {
 
 // GetType returns the BoxType
 func (*Trep) GetType() BoxType {
-	return BoxTypeTrep()
+	_ = "STUB: not implemented"
+	return
+
+	/*************************** trex ****************************/
+	*new(BoxType)
 }
 
-/*************************** trex ****************************/
-
-func BoxTypeTrex() BoxType { return StrToBoxType("trex") }
+func BoxTypeTrex() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 func init() {
 	AddBoxDef(&Trex{}, 0)
@@ -2351,12 +1868,14 @@ type Trex struct {
 
 // GetType returns the BoxType
 func (*Trex) GetType() BoxType {
-	return BoxTypeTrex()
+	_ = "STUB: not implemented"
+	return
+
+	/*************************** trun ****************************/
+	*new(BoxType)
 }
 
-/*************************** trun ****************************/
-
-func BoxTypeTrun() BoxType { return StrToBoxType("trun") }
+func BoxTypeTrun() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 func init() {
 	AddBoxDef(&Trun{}, 0, 1)
@@ -2383,55 +1902,37 @@ type TrunEntry struct {
 
 // GetType returns the BoxType
 func (*Trun) GetType() BoxType {
-	return BoxTypeTrun()
+	_ = "STUB: not implemented"
+	return *
+
+	// GetFieldSize returns size of dynamic field
+	new(BoxType)
 }
 
-// GetFieldSize returns size of dynamic field
-func (trun *Trun) GetFieldSize(name string, ctx Context) uint {
-	switch name {
-	case "Entries":
-		var size uint
-		flags := trun.GetFlags()
-		if flags&0x100 != 0 {
-			size += 32 // SampleDuration
-		}
-		if flags&0x200 != 0 {
-			size += 32 // SampleSize
-		}
-		if flags&0x400 != 0 {
-			size += 32 // SampleFlags
-		}
-		if flags&0x800 != 0 {
-			size += 32 // SampleCompositionTimeOffsetV0 or V1
-		}
-		return size
-	}
-	panic(fmt.Errorf("invalid name of dynamic-size field: boxType=trun fieldName=%s", name))
-}
+func (trun *Trun) GetFieldSize(name string, ctx Context) uint { _ = "STUB: not implemented"; return 0 }
+
+// SampleDuration
+
+// SampleSize
+
+// SampleFlags
+
+// SampleCompositionTimeOffsetV0 or V1
 
 // GetFieldLength returns length of dynamic field
 func (trun *Trun) GetFieldLength(name string, ctx Context) uint {
-	switch name {
-	case "Entries":
-		return uint(trun.SampleCount)
-	}
-	panic(fmt.Errorf("invalid name of dynamic-length field: boxType=trun fieldName=%s", name))
+	_ = "STUB: not implemented"
+	return 0
 }
 
 func (trun *Trun) GetSampleCompositionTimeOffset(index int) int64 {
-	switch trun.GetVersion() {
-	case 0:
-		return int64(trun.Entries[index].SampleCompositionTimeOffsetV0)
-	case 1:
-		return int64(trun.Entries[index].SampleCompositionTimeOffsetV1)
-	default:
-		return 0
-	}
+	_ = "STUB: not implemented"
+	return 0
 }
 
 /*************************** udta ****************************/
 
-func BoxTypeUdta() BoxType { return StrToBoxType("udta") }
+func BoxTypeUdta() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 func init() {
 	AddBoxDef(&Udta{})
@@ -2443,17 +1944,17 @@ type Udta struct {
 }
 
 // GetType returns the BoxType
-func (*Udta) GetType() BoxType {
-	return BoxTypeUdta()
-}
+func (*Udta) GetType() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 func isUnderUdta(ctx Context) bool {
-	return ctx.UnderUdta
+	_ = "STUB: not implemented"
+	return
+
+	/*************************** vmhd ****************************/
+	false
 }
 
-/*************************** vmhd ****************************/
-
-func BoxTypeVmhd() BoxType { return StrToBoxType("vmhd") }
+func BoxTypeVmhd() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 func init() {
 	AddBoxDef(&Vmhd{}, 0)
@@ -2468,12 +1969,14 @@ type Vmhd struct {
 
 // GetType returns the BoxType
 func (*Vmhd) GetType() BoxType {
-	return BoxTypeVmhd()
+	_ = "STUB: not implemented"
+	return
+
+	/*************************** wave ****************************/
+	*new(BoxType)
 }
 
-/*************************** wave ****************************/
-
-func BoxTypeWave() BoxType { return StrToBoxType("wave") }
+func BoxTypeWave() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 func init() {
 	AddBoxDef(&Wave{})
@@ -2485,6 +1988,4 @@ type Wave struct {
 }
 
 // GetType returns the BoxType
-func (*Wave) GetType() BoxType {
-	return BoxTypeWave()
-}
+func (*Wave) GetType() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }

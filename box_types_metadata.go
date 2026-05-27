@@ -1,15 +1,9 @@
 package mp4
 
-import (
-	"fmt"
-
-	"github.com/abema/go-mp4/internal/util"
-)
-
 /*************************** ilst ****************************/
 
-func BoxTypeIlst() BoxType { return StrToBoxType("ilst") }
-func BoxTypeData() BoxType { return StrToBoxType("data") }
+func BoxTypeIlst() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
+func BoxTypeData() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 var ilstMetaBoxTypes = []BoxType{
 	StrToBoxType("----"),
@@ -60,14 +54,7 @@ var ilstMetaBoxTypes = []BoxType{
 	{0xA9, 'w', 'r', 't'},
 }
 
-func IsIlstMetaBoxType(boxType BoxType) bool {
-	for _, bt := range ilstMetaBoxTypes {
-		if boxType == bt {
-			return true
-		}
-	}
-	return false
-}
+func IsIlstMetaBoxType(boxType BoxType) bool { _ = "STUB: not implemented"; return false }
 
 func init() {
 	AddBoxDef(&Ilst{})
@@ -84,17 +71,13 @@ type Ilst struct {
 }
 
 // GetType returns the BoxType
-func (*Ilst) GetType() BoxType {
-	return BoxTypeIlst()
-}
+func (*Ilst) GetType() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 type IlstMetaContainer struct {
 	AnyTypeBox
 }
 
-func isIlstMetaContainer(ctx Context) bool {
-	return ctx.UnderIlst && !ctx.UnderIlstMeta
-}
+func isIlstMetaContainer(ctx Context) bool { _ = "STUB: not implemented"; return false }
 
 const (
 	DataTypeBinary             = 0
@@ -117,42 +100,13 @@ type Data struct {
 }
 
 // GetType returns the BoxType
-func (*Data) GetType() BoxType {
-	return BoxTypeData()
-}
+func (*Data) GetType() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
-func isUnderIlstMeta(ctx Context) bool {
-	return ctx.UnderIlstMeta
-}
+func isUnderIlstMeta(ctx Context) bool { _ = "STUB: not implemented"; return false }
 
 // StringifyField returns field value as string
 func (data *Data) StringifyField(name string, indent string, depth int, ctx Context) (string, bool) {
-	switch name {
-	case "DataType":
-		switch data.DataType {
-		case DataTypeBinary:
-			return "BINARY", true
-		case DataTypeStringUTF8:
-			return "UTF8", true
-		case DataTypeStringUTF16:
-			return "UTF16", true
-		case DataTypeStringMac:
-			return "MAC_STR", true
-		case DataTypeStringJPEG:
-			return "JPEG", true
-		case DataTypeSignedIntBigEndian:
-			return "INT", true
-		case DataTypeFloat32BigEndian:
-			return "FLOAT32", true
-		case DataTypeFloat64BigEndian:
-			return "FLOAT64", true
-		}
-	case "Data":
-		switch data.DataType {
-		case DataTypeStringUTF8:
-			return fmt.Sprintf("\"%s\"", util.EscapeUnprintables(string(data.Data))), true
-		}
-	}
+	_ = "STUB: not implemented"
 	return "", false
 }
 
@@ -163,9 +117,7 @@ type StringData struct {
 
 // StringifyField returns field value as string
 func (sd *StringData) StringifyField(name string, indent string, depth int, ctx Context) (string, bool) {
-	if name == "Data" {
-		return fmt.Sprintf("\"%s\"", util.EscapeUnprintables(string(sd.Data))), true
-	}
+	_ = "STUB: not implemented"
 	return "", false
 }
 
@@ -183,18 +135,13 @@ type Item struct {
 
 // StringifyField returns field value as string
 func (i *Item) StringifyField(name string, indent string, depth int, ctx Context) (string, bool) {
-	switch name {
-	case "ItemName":
-		return fmt.Sprintf("\"%s\"", util.EscapeUnprintables(string(i.ItemName))), true
-	}
+	_ = "STUB: not implemented"
 	return "", false
 }
 
-func isUnderIlstFreeFormat(ctx Context) bool {
-	return ctx.UnderIlstFreeMeta
-}
+func isUnderIlstFreeFormat(ctx Context) bool { _ = "STUB: not implemented"; return false }
 
-func BoxTypeKeys() BoxType { return StrToBoxType("keys") }
+func BoxTypeKeys() BoxType { _ = "STUB: not implemented"; return *new(BoxType) }
 
 func init() {
 	AddBoxDef(&Keys{})
@@ -212,17 +159,14 @@ type Keys struct {
 
 // GetType implements the IBox interface and returns the BoxType
 func (*Keys) GetType() BoxType {
-	return BoxTypeKeys()
+	_ = "STUB: not implemented"
+	return *
+
+	// GetFieldLength implements the ICustomFieldObject interface and returns the length of dynamic fields
+	new(BoxType)
 }
 
-// GetFieldLength implements the ICustomFieldObject interface and returns the length of dynamic fields
-func (k *Keys) GetFieldLength(name string, ctx Context) uint {
-	switch name {
-	case "Entries":
-		return uint(k.EntryCount)
-	}
-	panic(fmt.Errorf("invalid name of dynamic-length field: boxType=keys fieldName=%s", name))
-}
+func (k *Keys) GetFieldLength(name string, ctx Context) uint { _ = "STUB: not implemented"; return 0 }
 
 /*************************** key ****************************/
 
@@ -236,22 +180,12 @@ type Key struct {
 }
 
 // GetFieldLength implements the ICustomFieldObject interface and returns the length of dynamic fields
-func (k *Key) GetFieldLength(name string, ctx Context) uint {
-	switch name {
-	case "KeyValue":
-		// sizeOf(KeySize)+sizeOf(KeyNamespace) = 8 bytes
-		return uint(k.KeySize) - 8
-	}
-	panic(fmt.Errorf("invalid name of dynamic-length field: boxType=key fieldName=%s", name))
-}
+func (k *Key) GetFieldLength(name string, ctx Context) uint { _ = "STUB: not implemented"; return 0 }
+
+// sizeOf(KeySize)+sizeOf(KeyNamespace) = 8 bytes
 
 // StringifyField returns field value as string
 func (k *Key) StringifyField(name string, indent string, depth int, ctx Context) (string, bool) {
-	switch name {
-	case "KeyNamespace":
-		return fmt.Sprintf("\"%s\"", util.EscapeUnprintables(string(k.KeyNamespace))), true
-	case "KeyValue":
-		return fmt.Sprintf("\"%s\"", util.EscapeUnprintables(string(k.KeyValue))), true
-	}
+	_ = "STUB: not implemented"
 	return "", false
 }
